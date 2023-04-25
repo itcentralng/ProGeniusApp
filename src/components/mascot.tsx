@@ -3,7 +3,7 @@ import mascot from '../components/images/[removal.ai]mascot.png'
 
 function Mascot() {
   return (
-    <><img src={`${mascot}`}   /></>
+    <><img src={`${mascot}`}  alt="Mascot Image" /></>
   )
 }
 
