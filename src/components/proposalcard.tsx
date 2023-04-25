@@ -17,7 +17,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert'; 
 
 import debounce from 'lodash/debounce'; //yarn add lodash-es && yarn add -D @types/lodash-es
-import {useNavigate } from 'react-router-dom'; 
+import {useNavigate, Navigate } from 'react-router-dom'; 
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -79,7 +79,9 @@ const ProposalCard = (data: Props) => {
   const id = data.id;
   const navigate = useNavigate();
   const handleClick = ()=>{
+    //navigate(`/document`,  { replace: true,  state: id })
     navigate(`/document`, { state: id })//navigate(`/document/${id}`)
+    //<Navigate to='/document' state={id} replace={true}/>
     console.log(`NAVIGATED`)
   }
  
