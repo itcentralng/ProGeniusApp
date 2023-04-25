@@ -13,18 +13,22 @@ export interface Props {
 const CounterCard = (data:Props)=> {
   const navigate =useNavigate();
   const [bg, setBg ] = useState('#fff');
+  const [nav, setNav] = useState('/proposals')
 
   const bgChange = (title: String)=>{
     let bgColor = '#fff';
     switch(title){
       case 'Proposals':
         bgColor =  '#2376AD';
+        setNav('/proposals');
         break;
       case 'Clients':
         bgColor =  '#16888C';
+        setNav('/clients');
         break;
       case 'Companies':
         bgColor =  '#6A50A4';
+        setNav('/companies');
         break;
       default:
         bgColor = '#fff';
@@ -43,7 +47,7 @@ const CounterCard = (data:Props)=> {
         <Typography variant='h5' component='h1' sx={{color:'#fff'}}>{data?.count}</Typography>
       </CardContent>
       <CardActions sx={{opacity: .8}}>
-        <Button size='small' onClick={()=>navigate('/proposals', { state: data.items})}>View Details</Button>
+        <Button size='small' onClick={()=>navigate(nav, { state: data.items})}>View Details</Button>
         
         <Button size='large' sx={{pl: '9rem'}}>
           {data?.title == 'Companies' && <AddBusinessTwoTone/>}
