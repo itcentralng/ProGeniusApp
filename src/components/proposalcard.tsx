@@ -11,12 +11,13 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { deepPurple, red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import {DocumentScannerSharp} from '@mui/icons-material';
+import {DocumentScannerSharp, DeleteForever } from '@mui/icons-material';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MoreVertIcon from '@mui/icons-material/MoreVert'; 
 
 import debounce from 'lodash/debounce'; //yarn add lodash-es && yarn add -D @types/lodash-es
+import {useNavigate } from 'react-router-dom'; 
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -66,15 +67,25 @@ const ProposalCard = (data: Props) => {
 
   const [bg] = useState('#2376AD');
   const [expanded, setExpanded] = React.useState(false);
-  const [coveringLetter] = React.useState(data.components_content.split('\n'));
+  const [coveringLetter] = ['A','B','C'];//React.useState(data.components_content.split('\n'));
+
+   
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+   
+  const id = data.id;
+  const navigate = useNavigate();
+  const handleClick = ()=>{
+    navigate(`/document`, { state: id })//navigate(`/document/${id}`)
+    console.log(`NAVIGATED`)
+  }
  
   return (
     <Card  key={'card-'+data.id}
-    sx={{ minWidth: '20rem', minHeight:'5rem', boxShadow: '0 2px 9px 0 #888888', border: `5px solid ${bg}`, overflowY: 'auto' }} variant='outlined'>
+    sx={{ width: '20rem', height:'28rem', boxShadow: '0 2px 9px 0 #888888', border: `5px solid ${bg}`, overflowY: 'auto' }} variant='outlined'>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: bg }} aria-label="myproposal">
@@ -83,13 +94,13 @@ const ProposalCard = (data: Props) => {
         }
         action={
           <IconButton aria-label="settings" sx={{ color: bg }}>
-            <MoreVertIcon />
+            <DeleteForever/>
           </IconButton>
         }
         title={data.title} 
         subheader={new Date(data.client_updated_at).toDateString()}
       />
-      <CardMedia
+      <CardMedia 
         component="img"
         height="194" 
         image={data.client_logo} 
@@ -105,8 +116,8 @@ const ProposalCard = (data: Props) => {
         <IconButton aria-label="share" sx={{ color: bg }}>
           <ShareIcon />
         </IconButton>
-        <IconButton aria-label="add to favorites"  sx={{ color: bg }}>
-          <DocumentScannerSharp />
+        <IconButton aria-label="add to favorites"  sx={{ color: bg }}  
+        onClick={handleClick}> <DocumentScannerSharp/>          
         </IconButton>
 
         <ExpandMore
@@ -123,9 +134,11 @@ const ProposalCard = (data: Props) => {
         <CardContent>
           <Typography paragraph>Covering Letter:</Typography>
           {
-            coveringLetter.map(part=>(
-              <Typography paragraph sx={{textAlign: 'justify'}}>{part}<br/></Typography>
-            ))
+            // coveringLetter.map(part=>(
+            //   <Typography paragraph sx={{textAlign: 'justify'}}>{part}<br/></Typography>
+            // ))
+            <Typography paragraph sx={{textAlign: 'justify'}}>{coveringLetter}<br/></Typography>
+
           }            
         </CardContent>
       </Collapse>
