@@ -1,20 +1,22 @@
-import { Grid, Typography } from '@mui/material'
+import { Grid, Paper, Typography } from '@mui/material'
 import { Box, Container } from '@mui/system'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import CounterCard from '../components/countercard'
 import Header from '../components/header'
-import Loader from '../components/loader'
-import mascot from '../components/images/[removal.ai]mascot.png'
+import Loader from '../components/loader' 
 import ProposalCard from '../components/proposalcard'
-
+import Mascot from '../components/mascot'
  
+
 function Dashboard() {
     const BASE_URL = `https://ai.proposal.itcentral.ng`; 
     const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI0MTQ1MjMsImlhdCI6MTY4MjMzMjUzMCwic3ViIjoxLCJyb2xlIjpudWxsfQ.cpeR8ZMElrsqGa55ULHJuP-Eu7NrtMeuIJd2SYatTa0`;
-    const [proposals, setProposals ]= useState([]);
-    const [clients, setClients ]= useState([]);
-    const [companies, setCompanies ]= useState([]);
+    const [proposals, setProposals]= useState([]);
+    const [clients, setClients]= useState([]);
+    const [companies, setCompanies]= useState([]);
 
+    const [ viewProposals, setViewProposals ]= useState(false); 
+     
     useEffect(()=>{
         fetchProposals();
         fetchClients();
@@ -85,6 +87,7 @@ function Dashboard() {
     };
 
     return (
+         
         <div style={{minHeight: '90vh'}}>
         {/* <Container maxWidth='sm'>  */}
              
@@ -98,26 +101,30 @@ function Dashboard() {
             
             <Grid sx={{}} container >
                 <Grid item xs={12} sm={3} md={3} lg={3}>
-                    <img src={`${mascot}`}   />
+                    <Mascot/>
                 </Grid>
                 <Grid item xs={12} sm={3} md={3} lg={3}>
-                    <CounterCard  title={'Proposals'} count={proposals.length}/>
+                    <CounterCard  title={'Proposals'} count={proposals.length} items={proposals}/>
                 </Grid>
                 <Grid item xs={12} sm={3} md={3} lg={3}>
-                    <CounterCard  title={'Clients'} count={clients.length}/>
+                    <CounterCard  title={'Clients'} count={clients.length} items={clients}/>
                 </Grid>
                 <Grid item xs={12} sm={3} md={3} lg={3}>
-                    <CounterCard  title={'Companies'} count={companies.length}/>
+                    <CounterCard  title={'Companies'} count={companies.length} items={companies}/>
                 </Grid>
             </Grid> 
                        
                               
             {/* <div style={{marginBottom: '2rem'}}></div> */}
              
+            {/* !viewProposals && (
+            <>
+
             
             <Grid sx={{}} container>
                 <Grid item xs={12} sm={3} md={3} lg={3}></Grid> 
                 <Grid item xs={12} sm={9} md={9} lg={9}><Typography variant='h3' sx={{color: '#3C0B79'}}>Proposals ({proposals.length})</Typography></Grid>
+                <Grid item xs={12} sm={9} md={9} lg={9}><br/></Grid>
             </Grid> 
 
             <Grid sx={{}} container >                   
@@ -143,10 +150,14 @@ function Dashboard() {
             
             <Box sx={{p:4}}>                  
                 <div style={{marginBottom: '2rem'}}></div>
-            </Box>  
+            </Box>
+             
+            </>
+            )*/} 
                     
         {/* </Container> */}
-        </div>
+        </div>           
+         
     )
 }
 

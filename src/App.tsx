@@ -19,8 +19,9 @@ function Copyright() {
 }
 
 export default function App() {
- 
-  return( 
+    
+    return( 
+     
     <div style={{background: '#F4F9FC',minHeight: '100vh'}}>
     {/* <Container>
       <Box>
@@ -30,6 +31,6 @@ export default function App() {
     </Container> */}
     <Main/>
     <Copyright/> 
-    </div> 
+    </div>  
   )
 }

@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Card from '@mui/material/Card';
 import { Button, CardActions, CardContent, Typography } from '@mui/material';
 import { AddBusinessTwoTone, AddBoxOutlined, AddCardRounded } from '@mui/icons-material';
-
+import {useNavigate} from 'react-router-dom'; 
 
 export interface Props {
   title: string,
   count: number,
+  items: any
+  //toggleViewProposals: void,
 }
 const CounterCard = (data:Props)=> {
-
+  const navigate =useNavigate();
   const [bg, setBg ] = useState('#fff');
 
   const bgChange = (title: String)=>{
@@ -34,13 +36,14 @@ const CounterCard = (data:Props)=> {
   },[data])
   
   return (
+     
     <Card sx={{width: '20rem', boxShadow:'0 2px 9px 0 #888888', border: `5px solid ${bg}` }} variant='outlined'>
       <CardContent sx={{background: bg}}>
         <Typography variant='h4' component='h1' sx={{color: 'gold'}}>{data?.title}</Typography>
         <Typography variant='h5' component='h1' sx={{color:'#fff'}}>{data?.count}</Typography>
       </CardContent>
       <CardActions sx={{opacity: .8}}>
-        <Button size='small'>View Details</Button>
+        <Button size='small' onClick={()=>navigate('/proposals', { state: data.items})}>View Details</Button>
         
         <Button size='large' sx={{pl: '9rem'}}>
           {data?.title == 'Companies' && <AddBusinessTwoTone/>}
@@ -49,6 +52,7 @@ const CounterCard = (data:Props)=> {
         </Button>
       </CardActions>
     </Card>
+     
   )
 }
 
