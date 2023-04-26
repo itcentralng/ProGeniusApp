@@ -5,7 +5,7 @@ import ProposalCard from './proposalcard'
 import { useLocation } from 'react-router-dom'
 import Mascot from './mascot'
 import { AddBusinessTwoTone, AddBoxOutlined, AddCardRounded } from '@mui/icons-material';
-
+import Masonry from '@mui/lab/Masonry';
 
 function Proposals() {
     const location = useLocation();
@@ -52,8 +52,10 @@ function Proposals() {
             </Grid> 
 
             <Grid sx={{px:20}} spacing={1} container >                   
-                <Grid item xs={12} sm={3} md={3} lg={3}>
-                    <Box sx={{background:'#3C0B79',width: '20rem', height:'28rem', boxShadow: '0 2px 9px 0 #888888', color: '#fff', border:'1px solid #fff'}}>
+            <Masonry columns={3} spacing={2}>
+                {/* <Grid item xs={12} sm={3} md={3} lg={3}> */}
+                    {/* <Box sx={{background:'#3C0B79',width: '20rem', height:'28rem', boxShadow: '0 2px 9px 0 #888888', color: '#fff', border:'1px solid #fff'}}> */}
+                    <Box sx={{background:'#3C0B79', boxShadow: '0 2px 9px 0 #888888', color: '#fff', border:'1px solid #fff'}}>
                         <Typography variant='h4' sx={{p:2, textAlign: 'center', color: 'gold'}}>
                             My Proposals
                             <Button sx={{color:'#fff'}}><AddCardRounded sx={{fontSize:'2rem'}}/></Button>
@@ -61,11 +63,11 @@ function Proposals() {
                         <Mascot/>
                         <Typography variant='h5' sx={{p:2, textAlign: 'center'}}>Total: {proposals.length}</Typography>
                     </Box>                     
-                </Grid> 
+                {/* </Grid>  */}
  
                 {proposals.map((proposal:any)=>(
                      
-                    <Grid key={proposal?.id} item xs={12} sm={3} md={3} lg={3}>
+                    // <Grid key={proposal?.id} item xs={12} sm={3} md={3} lg={3}>
                         <>
                         <ProposalCard id={proposal?.id} title={proposal?.offering} description={proposal?.description} client_email={proposal?.client.email} 
                         client_address={proposal?.client.address} client_updated_at={proposal?.client.updated_at} client_logo={proposal?.client.logo} 
@@ -74,7 +76,7 @@ function Proposals() {
                         /> 
                         {console.log(`Id: ${proposal.id} ${proposal.client.name}`)}
                         </>
-                    </Grid>  
+                    // </Grid>  
                                            
                 ))}
 
@@ -92,7 +94,7 @@ function Proposals() {
                     </Grid>  
                                            
                 ))*/}                
-
+            </Masonry>
             </Grid> 
             
             <Box sx={{p:4}}>                  

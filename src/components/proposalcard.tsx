@@ -86,8 +86,10 @@ const ProposalCard = (data: Props) => {
   }
  
   return (
+    // <Card  key={'card-'+data.id}
+    // sx={{ width: '20rem', height:'28rem', boxShadow: '0 2px 9px 0 #888888', border: `5px solid ${bg}`, overflowY: 'auto' }} variant='outlined'>
     <Card  key={'card-'+data.id}
-    sx={{ width: '20rem', height:'28rem', boxShadow: '0 2px 9px 0 #888888', border: `5px solid ${bg}`, overflowY: 'auto' }} variant='outlined'>
+    sx={{ minWidth: '5rem', minHeight:'5rem', boxShadow: '0 2px 9px 0 #888888', border: `5px solid ${bg}`, overflowY: 'auto' }} variant='outlined'>   
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: bg }} aria-label="myproposal">
