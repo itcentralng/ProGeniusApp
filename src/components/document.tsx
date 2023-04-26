@@ -12,8 +12,9 @@ function DocumentView() {
     const id = location.state;
 
     const BASE_URL = `https://ai.proposal.itcentral.ng`; 
-    const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1MDMyODYsImlhdCI6MTY4MjQxNzIwNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.E3WlLnaTDkMGnif4bR08rJlOpxPBbhOf8DeN776J28M`;
-    const [proposal, setProposal]:any= useState({});
+    const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1OTM1MTEsImlhdCI6MTY4MjUwNzExNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.oCeMxP77br2_Lqs0E0OZRM4svSqBO0WgrsVue3bdi8s`;
+    const TINY_MCE_TOKEN = `lp7iu5azuh7zvuobj0azvekuu5orfmemlhdlgc65mjeobzw2`;//`a9ymejj5q3wrnf2wwt1zxnjedqxog4oc9b6zgs7boba7rbcy`;
+
     const [about, setAbout] = useState('-');
     const [problem, setProblem] = useState('-');
     const [solution, setSolution ] = useState('-');
@@ -23,6 +24,7 @@ function DocumentView() {
 
     const [client, setClient]:any = useState({});
     const [company, setCompany]:any = useState({});
+    const [offering, setOfferring] = useState('-');
     const [companyAddress, setCompanyAddress]:any = useState([]);
     const [clientAddress, setClientAddress]:any = useState([]);
 
@@ -39,49 +41,49 @@ function DocumentView() {
     const aboutEditorRef:any = useRef(null);
     const logAbout = () => {
         if (aboutEditorRef.current) {
-            console.log(aboutEditorRef.current.getContent());
+            console.log(`ABOUT CONTENT: ${aboutEditorRef.current.getContent()}`);
         }
     };
 
     const letterEditorRef:any = useRef(null);
     const logLetter = () => {
         if (letterEditorRef.current) {
-            console.log(letterEditorRef.current.getContent());
+            console.log(`LETTER CONTENT: ${letterEditorRef.current.getContent()}`);
         }
     };
 
     const problemEditorRef:any = useRef(null);
     const logProblem = () => {
         if (problemEditorRef.current) {
-            console.log(problemEditorRef.current.getContent());
+            console.log(`PROBLEM CONTENT: ${problemEditorRef.current.getContent()}`);
         }
     };
 
     const solutionEditorRef:any = useRef(null);
     const logSolution = () => {
         if (solutionEditorRef.current) {
-            console.log(solutionEditorRef.current.getContent());
+            console.log(`SOLUTION CONTENT: ${solutionEditorRef.current.getContent()}`);
         }
     };
 
     const implementationEditorRef:any = useRef(null);
     const logImplementation = () => {
         if (implementationEditorRef.current) {
-            console.log(implementationEditorRef.current.getContent());
+            console.log(`IMPLEMENTATION CONTENT: ${implementationEditorRef.current.getContent()}`);
         }
     };
 
     const costEditorRef:any = useRef(null);
     const logCost = () => {
         if (costEditorRef.current) {
-            console.log(costEditorRef.current.getContent());
+            console.log(`COST CONTENT: ${costEditorRef.current.getContent()}`);
         }
     };
 
     const previewEditorRef:any = useRef(null);
     const logPreview = () => {
         if (previewEditorRef.current) {
-            console.log(previewEditorRef.current.getContent());
+            console.log(`PREVIEW CONTENT: ${previewEditorRef.current.getContent()}`);
         }
     };
 
@@ -106,7 +108,7 @@ function DocumentView() {
         //   console.log(`Response: ${response.components[3].code}`);//implementation
         //   console.log(`Response: ${response.components[4].code}`);//cost
         //   console.log(`Response: ${response.components[5].code}`); //letter 
-          
+          setLoading(false);
           if (request.ok) {
             //setProposal(response);  
             response.components.map((component:any)=>{
@@ -125,10 +127,10 @@ function DocumentView() {
                         setImplementation(component.content);
                         break;
                     case 'cost':
-                        setCost(component.cost);
+                        setCost(component.content);
                         break;
                     case 'letter':
-                        setLetter(component.letter);
+                        setLetter(component.content); 
                         break;                        
                 }
             });
@@ -144,9 +146,10 @@ function DocumentView() {
 
             setClient(response.client);
             setCompany(response.company);
+            setOfferring(response.offering);
             setCompanyAddress(response.company.address.split(','));
             setClientAddress(response.client.address.split(','));
-            setLoading(false);
+            //setLoading(false);
           }
         } catch (error) {
             setLoading(false);
@@ -154,11 +157,11 @@ function DocumentView() {
         }
     };
 
-    const improveProposal = async (component:string) => {
+    const createComponentProposal = async (component:string) => {
         setLoading(true);
         console.log("fetching proposal...");
         try {
-          const request = await fetch(`${BASE_URL}/proposal/improve/${id}`, {
+          const request = await fetch(`${BASE_URL}/proposal/${id}`, {
             method: 'POST',
             headers: {
               "Content-Type": "application/json",
@@ -169,6 +172,7 @@ function DocumentView() {
             }),
           });
           const response = await request.json(); 
+          setLoading(false);
           if (request.ok) {
             //setProposal(response);  
             response.components.map((comp:any)=>{ 
@@ -208,8 +212,105 @@ function DocumentView() {
                 setCost('-');
                 setLetter('-');
             }
-            setLoading(false);
+            //setLoading(false);
           }
+        } catch (error) {
+            setLoading(false);
+          console.log(error);
+        }
+    };
+
+    const improveProposal = async (component:string) => {
+        setLoading(true);
+        console.log("fetching proposal...");
+        try {
+            const url = cost == '-'?`${BASE_URL}/proposal/${id}`:`${BASE_URL}/proposal/improve/${id}`;
+            const request = await fetch(`${url}`,{ //fetch(`${BASE_URL}/proposal/improve/${id}`, {
+                method: 'POST',
+                headers: {
+                "Content-Type": "application/json",
+                authorization: `bearer ${BEARER_TOKEN}`,
+                },
+                body:JSON.stringify({
+                    component: component
+                }),
+            });
+            const response = await request.json(); 
+            setLoading(false);
+            if (request.ok) {
+                //setProposal(response);  
+                
+                response.components.map((comp:any)=>{ 
+                    if(component == comp.code && component == 'about'){                    
+                        setAbout(comp.content);
+                        setAboutView(true); 
+                    }
+
+                    if(component == comp.code && component == 'problem'){
+                        setProblem(comp.content);
+                        setProblemView(true);
+                    }
+
+                    if(component == comp.code && component == 'solution'){
+                        setSolution(comp.content);
+                        setSolutionView(true);
+                    }
+
+                    if(component == comp.code && component == 'implementation'){
+                        setImplementation(comp.content);
+                        setImplementationView(true);
+                    }
+
+                    if(component == comp.code && component == 'cost'){
+                        setCost(comp.cost);
+                        setCostView(true);
+                    }
+                    
+                    if(component == comp.code && component == 'letter'){
+                        setLetter(comp.letter);
+                        setLetterView(true);
+                    }
+                    
+                    /*switch(component){
+                        case 'about':
+                            setAbout(comp.content);
+                            setAboutView(true);
+                            break;
+                        case 'problem':
+                            setProblem(comp.content);
+                            setProblemView(true);
+                            break;
+                        case 'solution':
+                            setSolution(comp.content);
+                            setSolutionView(true);
+                            break;
+                        case 'implementation':
+                            setImplementation(comp.content);
+                            setImplementationView(true);
+                            break;
+                        case 'cost':
+                            setCost(comp.cost);
+                            setCostView(true);
+                            break;
+                        case 'letter':
+                            setLetter(comp.letter);
+                            setLetterView(true);
+                            break;                        
+                    }*/
+                });
+
+                if(response.components.length == 0){
+                    setAbout('-');
+                    setProblem('-');
+                    setSolution('-');
+                    setImplementation('-');
+                    setCost('-');
+                    setLetter('-');
+                }
+                console.log('IN IMPROVEMENT')
+                logPreview();
+                //setLoading(false);
+            }
         } catch (error) {
             setLoading(false);
           console.log(error);
@@ -268,17 +369,18 @@ function DocumentView() {
                 <Grid item xs={12} sm={12} md={9} lg={9}>
                     <Box sx={{ p:2, textAlign: 'justify', background: '#EEF2F2', minHeight: '28rem', boxShadow: '0 2px 9px 0 #888888', color: 'black', border: '1px solid #fff' }}>
                         {loading && "Loading..."}
-                        {!loading && !aboutView && !letterView && !problemView && !solutionView && !implementationView  && !costView &&!preview 
+                        {!loading && !aboutView && !letterView && !problemView && !solutionView && !implementationView  && !costView && !preview 
                         && <><Mascot/> <Typography variant='h6' sx={{ p: 2, }}>Conjure Something...Use the proposal outline to start.</Typography></>}
-                        {!loading && about && aboutView &&
+                        {loading && about && aboutView &&
                         (                            
                             <>
                             <Typography variant='h4' sx={{ p: 2, }}>
                             About Us
                             </Typography>
-                            <Editor onKeyUp={()=>logAbout} onBlur={()=>logAbout} 
+                            <Editor onEditorChange={()=>logAbout}  
                                 onInit={(evt, editor) => aboutEditorRef.current = editor} 
                                 initialValue={"<p>"+about+"</p>"} 
+                                apiKey={TINY_MCE_TOKEN}
                                 init={{
                                 height: 500,
                                 menubar: false,
@@ -304,9 +406,10 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Covering Letter
                             </Typography>
-                            <Editor
+                            <Editor onEditorChange={()=>logLetter} 
                                 onInit={(evt, editor) => letterEditorRef.current = editor} 
                                 initialValue={"<p>"+letter+"</p>"} 
+                                apiKey={TINY_MCE_TOKEN} 
                                 init={{
                                 height: 500,
                                 menubar: false,
@@ -333,9 +436,10 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Problem Statement
                             </Typography>
-                            <Editor
+                            <Editor onEditorChange={()=>logProblem} 
                                 onInit={(evt, editor) => problemEditorRef.current = editor} 
                                 initialValue={"<p>"+problem+"</p>"} 
+                                apiKey={TINY_MCE_TOKEN} 
                                 init={{
                                 height: 500,
                                 menubar: false,
@@ -361,9 +465,10 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Solution
                             </Typography>
-                            <Editor
+                            <Editor onEditorChange={()=>logSolution} 
                                 onInit={(evt, editor) => solutionEditorRef.current = editor} 
                                 initialValue={"<p>"+solution+"</p>"} 
+                                apiKey={TINY_MCE_TOKEN} 
                                 init={{
                                 height: 500,
                                 menubar: false,
@@ -389,9 +494,10 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Implementation
                             </Typography>
-                            <Editor
+                            <Editor onEditorChange={()=>logImplementation} 
                                 onInit={(evt, editor) => implementationEditorRef.current = editor} 
                                 initialValue={"<p>"+implementation+"</p>"} 
+                                apiKey={TINY_MCE_TOKEN}
                                 init={{
                                 height: 500,
                                 menubar: false,
@@ -417,9 +523,10 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Costing
                             </Typography>
-                            <Editor
+                            <Editor onEditorChange={()=>logCost} 
                                 onInit={(evt, editor) => costEditorRef.current = editor} 
                                 initialValue={"<p>"+cost+"</p>"} 
+                                apiKey={TINY_MCE_TOKEN}
                                 init={{
                                 height: 500,
                                 menubar: false,
@@ -446,7 +553,7 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Proposal Preview
                             </Typography>
-                            <Editor
+                            <Editor onEditorChange={()=>logPreview} 
                                 onInit={(evt, editor) => previewEditorRef.current = editor} 
                                 initialValue=
                                 {
@@ -472,28 +579,44 @@ function DocumentView() {
                                     +client.phone+", <br/>"
                                     +"</p>"+
 
-                                    "<h4 style='text-decoration: underline'>"+company?.offering?.toUpperCase()+"</h4>"+
+                                    "<h4 style='text-decoration: underline'>"+offering?.toUpperCase()+"</h4>"+
 
                                     "<p>"+letter+"</p><br/>"+
-                                    "<p>"+about+"</p><br/>"+
-                                    "<p>"+problem+"</p><br/>"+
-                                    "<p>"+solution+"</p><br/>"+
-                                    "<p>"+implementation+"</p><br/>"+
-                                    "<p>"+cost+"</p><br/>"+
-                                    "<p style='padding-left: 80%'> Yours Sincerely,<br/> "+company.rep+"<br/>"+company.role+"<br/>"+"</p><br/>"
+                                    "<p style='padding-left: 80%'> Yours Sincerely,<br/> "+company.rep+"<br/>"+company.role+"<br/>"+"</p><br/>"+
+                                    "<!-- pagebreak -->" +
 
-                                } 
+                                    "<h4 style='text-decoration: underline'>About Us</h4>"+
+                                    "<p>"+about+"</p><br/>"+
+                                    "<!-- pagebreak -->" +
+
+                                    "<h4 style='text-decoration: underline'>Problem Statement</h4>"+
+                                    "<p>"+problem+"</p><br/>"+
+                                    "<!-- pagebreak -->" +
+
+                                    "<h4 style='text-decoration: underline'>Solution</h4>"+
+                                    "<p>"+solution+"</p><br/>"+
+                                    "<!-- pagebreak -->" +
+
+                                    "<h4 style='text-decoration: underline'>Implementation</h4>"+
+                                    "<p>"+implementation+"</p><br/>"+
+                                    "<!-- pagebreak -->" +
+
+                                    "<h4 style='text-decoration: underline'>Costing</h4>"+
+                                    "<p>"+cost+"</p><br/>"
+                                    
+
+                                }
+                                apiKey={TINY_MCE_TOKEN} 
                                 init={{
                                 height: 500,
                                 menubar: false,
-                                plugins: [
-                                    'advlist autolink lists link image charmap print preview anchor',
-                                    'searchreplace visualblocks code fullscreen',
-                                    'insertdatetime media table paste code help wordcount'
-                                ],
+                                plugins: 
+                                    'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount pagebreak'
+                                ,
                                 toolbar: 'undo redo | formatselect | ' +
                                 'bold italic backcolor | alignleft aligncenter ' +
                                 'alignright alignjustify | bullist numlist outdent indent | ' +
+                                'pagebreak | ' +
                                 'removeformat | help',
                                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                                 }}

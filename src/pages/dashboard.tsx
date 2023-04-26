@@ -10,7 +10,7 @@ import Mascot from '../components/mascot'
 
 function Dashboard() {
     const BASE_URL = `https://ai.proposal.itcentral.ng`; 
-    const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1MDMyODYsImlhdCI6MTY4MjQxNzIwNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.E3WlLnaTDkMGnif4bR08rJlOpxPBbhOf8DeN776J28M`;
+    const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1OTM1MTEsImlhdCI6MTY4MjUwNzExNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.oCeMxP77br2_Lqs0E0OZRM4svSqBO0WgrsVue3bdi8s`;
     const [proposals, setProposals]= useState([]);
     const [clients, setClients]= useState([]);
     const [companies, setCompanies]= useState([]); 

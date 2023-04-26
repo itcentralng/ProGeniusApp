@@ -7,13 +7,29 @@ import Mascot from './mascot'
 import { AddBusinessTwoTone, AddBoxOutlined, AddCardRounded } from '@mui/icons-material';
 import Masonry from '@mui/lab/Masonry';
 
+import debounce from 'lodash/debounce'; //yarn add lodash-es && yarn add -D @types/lodash-es
+
 function Proposals() {
     const location = useLocation();
     console.log(`Proposals Location: ${location.state}`)
     //const proposals:[] = location.state;
 
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = debounce(() => {
+        setWidth(window.innerWidth);
+        }, 500);
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+        window.removeEventListener('resize', handleResize);
+        };
+    }, []); 
+
     const BASE_URL = `https://ai.proposal.itcentral.ng`; 
-    const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1MDMyODYsImlhdCI6MTY4MjQxNzIwNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.E3WlLnaTDkMGnif4bR08rJlOpxPBbhOf8DeN776J28M`;
+    const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1OTM1MTEsImlhdCI6MTY4MjUwNzExNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.oCeMxP77br2_Lqs0E0OZRM4svSqBO0WgrsVue3bdi8s`;
     const [proposals, setProposals]= useState([]);
 
     useEffect(()=>{
