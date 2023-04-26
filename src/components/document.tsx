@@ -14,12 +14,17 @@ function DocumentView() {
     const BASE_URL = `https://ai.proposal.itcentral.ng`; 
     const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1MDMyODYsImlhdCI6MTY4MjQxNzIwNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.E3WlLnaTDkMGnif4bR08rJlOpxPBbhOf8DeN776J28M`;
     const [proposal, setProposal]:any= useState({});
-    const [about, setAbout] = useState('');
-    const [problem, setProblem] = useState('');
-    const [solution, setSolution ] = useState('');
-    const [implementation, setImplementation ] = useState('');
-    const [cost, setCost ] = useState('');
-    const [letter, setLetter] = useState('');
+    const [about, setAbout] = useState('-');
+    const [problem, setProblem] = useState('-');
+    const [solution, setSolution ] = useState('-');
+    const [implementation, setImplementation ] = useState('-');
+    const [cost, setCost ] = useState('-');
+    const [letter, setLetter] = useState('-');
+
+    const [client, setClient]:any = useState({});
+    const [company, setCompany]:any = useState({});
+    const [companyAddress, setCompanyAddress]:any = useState([]);
+    const [clientAddress, setClientAddress]:any = useState([]);
 
 
     const [loading, setLoading] = useState(false);
@@ -29,6 +34,7 @@ function DocumentView() {
     const [implementationView, setImplementationView ] = useState(false);
     const [costView, setCostView ] = useState(false);
     const [letterView, setLetterView] = useState(false);
+    const [preview, setPreview ] = useState(false);
     
     const aboutEditorRef:any = useRef(null);
     const logAbout = () => {
@@ -69,6 +75,13 @@ function DocumentView() {
     const logCost = () => {
         if (costEditorRef.current) {
             console.log(costEditorRef.current.getContent());
+        }
+    };
+
+    const previewEditorRef:any = useRef(null);
+    const logPreview = () => {
+        if (previewEditorRef.current) {
+            console.log(previewEditorRef.current.getContent());
         }
     };
 
@@ -128,6 +141,11 @@ function DocumentView() {
                 setCost('-');
                 setLetter('-');
             }
+
+            setClient(response.client);
+            setCompany(response.company);
+            setCompanyAddress(response.company.address.split(','));
+            setClientAddress(response.client.address.split(','));
             setLoading(false);
           }
         } catch (error) {
@@ -241,7 +259,7 @@ function DocumentView() {
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('cost')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>Preview</Button></Grid>
-                            <Grid item xs={6} sm={2} md={2} lg={2}><Button sx={{ color: '#fff' }}><PreviewTwoTone /></Button></Grid>
+                            <Grid item xs={6} sm={2} md={2} lg={2}><Button sx={{ color: '#fff' }} onClick={()=>setPreview(!preview)}><PreviewTwoTone /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }}><SaveAs /></Button></Grid>
                         </Grid>
                     </Box>
@@ -250,7 +268,7 @@ function DocumentView() {
                 <Grid item xs={12} sm={12} md={9} lg={9}>
                     <Box sx={{ p:2, textAlign: 'justify', background: '#EEF2F2', minHeight: '28rem', boxShadow: '0 2px 9px 0 #888888', color: 'black', border: '1px solid #fff' }}>
                         {loading && "Loading..."}
-                        {!loading && !aboutView && !letterView && !problemView && !solutionView && !implementationView  && !costView 
+                        {!loading && !aboutView && !letterView && !problemView && !solutionView && !implementationView  && !costView &&!preview 
                         && <><Mascot/> <Typography variant='h6' sx={{ p: 2, }}>Conjure Something...Use the proposal outline to start.</Typography></>}
                         {!loading && about && aboutView &&
                         (                            
@@ -258,7 +276,7 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             About Us
                             </Typography>
-                            <Editor
+                            <Editor onKeyUp={()=>logAbout} onBlur={()=>logAbout} 
                                 onInit={(evt, editor) => aboutEditorRef.current = editor} 
                                 initialValue={"<p>"+about+"</p>"} 
                                 init={{
@@ -419,8 +437,70 @@ function DocumentView() {
                             />
                             {/* <button onClick={logCost}>Log editor content</button> */}
                             </>
-                        )}         
+                        )}  
 
+                         
+                        {!loading && preview &&
+                        (                            
+                            <>
+                            <Typography variant='h4' sx={{ p: 2, }}>
+                            Proposal Preview
+                            </Typography>
+                            <Editor
+                                onInit={(evt, editor) => previewEditorRef.current = editor} 
+                                initialValue=
+                                {
+                                    
+                                    "<p style='text-align:right'>"
+                                    +company.name+", <br/>"
+                                    +companyAddress[0]+", <br/>"
+                                    +companyAddress[1]+", <br/>"
+                                    +companyAddress[2]+", <br/>"
+                                    +company.email+", <br/>"
+                                    +company.phone+", <br/>"
+                                    +"</p>"+
+
+                                    "<p align='center'><img src='"+company.logo+"' width=100 height=200/></p>"+
+
+                                    "<p style='text-align:left'>"
+                                    +client.role+", <br/>"
+                                    +client.name+", <br/>"
+                                    +clientAddress[0]+", <br/>"
+                                    +clientAddress[1]+", <br/>"
+                                    +clientAddress[2]+", <br/>"
+                                    +client.email+", <br/>"
+                                    +client.phone+", <br/>"
+                                    +"</p>"+
+
+                                    "<h4 style='text-decoration: underline'>"+company?.offering?.toUpperCase()+"</h4>"+
+
+                                    "<p>"+letter+"</p><br/>"+
+                                    "<p>"+about+"</p><br/>"+
+                                    "<p>"+problem+"</p><br/>"+
+                                    "<p>"+solution+"</p><br/>"+
+                                    "<p>"+implementation+"</p><br/>"+
+                                    "<p>"+cost+"</p><br/>"+
+                                    "<p style='padding-left: 80%'> Yours Sincerely,<br/> "+company.rep+"<br/>"+company.role+"<br/>"+"</p><br/>"
+
+                                } 
+                                init={{
+                                height: 500,
+                                menubar: false,
+                                plugins: [
+                                    'advlist autolink lists link image charmap print preview anchor',
+                                    'searchreplace visualblocks code fullscreen',
+                                    'insertdatetime media table paste code help wordcount'
+                                ],
+                                toolbar: 'undo redo | formatselect | ' +
+                                'bold italic backcolor | alignleft aligncenter ' +
+                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                'removeformat | help',
+                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                }}
+                            />
+                            {/* <button onClick={logCost}>Log editor content</button> */}
+                            </>
+                        )}     
 
 
                     </Box>
