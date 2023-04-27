@@ -50,7 +50,7 @@ function Proposals() {
     
 
     const BASE_URL = `https://ai.proposal.itcentral.ng`; 
-    const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1OTM1MTEsImlhdCI6MTY4MjUwNzExNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.oCeMxP77br2_Lqs0E0OZRM4svSqBO0WgrsVue3bdi8s`;
+    const BEARER_TOKEN = localStorage.getItem('token');
     const [proposals, setProposals]= useState([]);
 
     useEffect(()=>{
