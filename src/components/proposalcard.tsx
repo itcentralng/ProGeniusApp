@@ -16,8 +16,15 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert'; 
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle'; 
+
 import debounce from 'lodash/debounce'; //yarn add lodash-es && yarn add -D @types/lodash-es
 import {useNavigate, Navigate } from 'react-router-dom'; 
+import { Button, CircularProgress } from '@mui/material';
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -75,7 +82,6 @@ const ProposalCard = (data: Props) => {
     setExpanded(!expanded);
   };
 
-   
   const id = data.id;
   const navigate = useNavigate();
   const handleClick = ()=>{
@@ -84,12 +90,51 @@ const ProposalCard = (data: Props) => {
     //<Navigate to='/document' state={id} replace={true}/>
     console.log(`NAVIGATED`)
   }
+
+  const BASE_URL = `https://ai.proposal.itcentral.ng`; 
+  const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1OTM1MTEsImlhdCI6MTY4MjUwNzExNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.oCeMxP77br2_Lqs0E0OZRM4svSqBO0WgrsVue3bdi8s`;
+     
+  const [deleteLoader, setDeleteLoader] = useState(false); 
+  const deleteProposal = async()=>{
+    //alert(`Company: ${company} Client: ${client} Desc: ${description} Offering: ${offering}`);
+    setDeleteLoader(true);
+    try {
+        const request = await fetch(`${BASE_URL}/proposal/${id}`, {
+        method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json",
+                authorization: `bearer ${BEARER_TOKEN}`,
+            }, 
+        });
+        const response = await request.json();
+        setDeleteLoader(false);
+        if (request.ok) {
+          //setClients(response); 
+
+        }
+      } catch (error) {
+        setDeleteLoader(false);
+        console.log(error);
+      }
+  }
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpenDialog = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
  
   return (
-    // <Card  key={'card-'+data.id}
-    // sx={{ width: '20rem', height:'28rem', boxShadow: '0 2px 9px 0 #888888', border: `5px solid ${bg}`, overflowY: 'auto' }} variant='outlined'>
+    <>
+    {/* // <Card  key={'card-'+data.id}
+    // sx={{ width: '20rem', height:'28rem', boxShadow: '0 2px 9px 0 #888888', border: `5px solid ${bg}`, overflowY: 'auto' }} variant='outlined'> */}
     <Card  key={'card-'+data.id}
-    sx={{ minWidth: '5rem', minHeight:'5rem', boxShadow: '0 2px 9px 0 #888888', border: `5px solid ${bg}`, overflowY: 'auto' }} variant='outlined'>   
+    sx={{ minWidth: '5rem', minHeight:'10rem', boxShadow: '0 2px 9px 0 #888888', border: `5px solid ${bg}`, overflowY: 'auto' }} variant='outlined'>   
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: bg }} aria-label="myproposal">
@@ -98,23 +143,31 @@ const ProposalCard = (data: Props) => {
         }
         action={
           <IconButton aria-label="settings" sx={{ color: bg }}>
-            <DeleteForever/>
+            <MoreVertIcon/>
           </IconButton>
         }
         title={data.title} 
         subheader={new Date(data.client_updated_at).toDateString()}
       />
+      {!deleteLoader && 
       <CardMedia 
         component="img"
         height="194" 
         image={data.client_logo} 
         alt="Client Logo"
-      />
+      />}
+
+      {deleteLoader && <div style={{display:'flex', alignContent: 'center', justifyContent: 'center'}}><CircularProgress  color="secondary" /></div>}
+      
+      { !deleteLoader && (
+      <>
+      
       <CardContent>
         <Typography variant="body2" color="text.secondary" sx={{textAlign: 'justify'}}>
           {data.description}
         </Typography>
       </CardContent>
+
       <CardActions disableSpacing>
         
         <IconButton aria-label="share" sx={{ color: bg }}>
@@ -124,7 +177,7 @@ const ProposalCard = (data: Props) => {
         onClick={handleClick}> <DocumentScannerSharp/>          
         </IconButton>
 
-        <ExpandMore
+        {/* <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
@@ -132,9 +185,21 @@ const ProposalCard = (data: Props) => {
           sx={{ color: bg }}
         >
           <ExpandMoreIcon />
+        </ExpandMore> */}
+        <ExpandMore
+          expand={expanded}
+          onClick={handleClickOpenDialog}
+          aria-expanded={expanded}
+          aria-label="show more"  
+          sx={{ color: bg }} size='medium'
+        >
+           <DeleteForever/>
         </ExpandMore>
+         
+
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+
+      {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Covering Letter:</Typography>
           {
@@ -145,9 +210,34 @@ const ProposalCard = (data: Props) => {
 
           }            
         </CardContent>
-      </Collapse>
+      </Collapse> */}
 
+      </>
+      )}
     </Card>
+
+    <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Delete Proposal?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Proceed to delete {data.title}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog}>Cancel</Button>
+          <Button onClick={deleteProposal} autoFocus>
+            Proceed
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
 
