@@ -1,5 +1,5 @@
 import { Grid, Typography, Box, Button } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Header from './header'
 import ProposalCard from './proposalcard'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -17,8 +17,9 @@ function Proposals() {
     const navigate = useNavigate();
 
     const [width, setWidth] = useState(window.innerWidth);
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    /*useEffect(() => {
         const handleResize = debounce(() => {
         setWidth(window.innerWidth);
         }, 500);
@@ -28,7 +29,25 @@ function Proposals() {
         return () => {
         window.removeEventListener('resize', handleResize);
         };
-    }, []); 
+    }, [width]); */
+    useEffect(() => {
+        const resizeObserver = new ResizeObserver(
+          debounce((entries) => {
+            const { width } = entries[0].contentRect;
+            setWidth(width);
+          }, 500)
+        );
+        if (containerRef.current) {
+          resizeObserver.observe(containerRef.current);
+        }
+    
+        return () => {
+          if (containerRef.current) {
+            resizeObserver.unobserve(containerRef.current);
+          }
+        };
+      }, []);
+    
 
     const BASE_URL = `https://ai.proposal.itcentral.ng`; 
     const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1OTM1MTEsImlhdCI6MTY4MjUwNzExNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.oCeMxP77br2_Lqs0E0OZRM4svSqBO0WgrsVue3bdi8s`;

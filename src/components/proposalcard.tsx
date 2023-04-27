@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -60,17 +60,36 @@ const ProposalCard = (data: Props) => {
 
   const [width, setWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    const handleResize = debounce(() => {
-      setWidth(window.innerWidth);
-    }, 500);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-    window.addEventListener('resize', handleResize);
+    /*useEffect(() => {
+        const handleResize = debounce(() => {
+        setWidth(window.innerWidth);
+        }, 500);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+        window.removeEventListener('resize', handleResize);
+        };
+    }, [width]); */
+    useEffect(() => {
+      const resizeObserver = new ResizeObserver(
+        debounce((entries) => {
+          const { width } = entries[0].contentRect;
+          setWidth(width);
+        }, 500)
+      );
+      if (containerRef.current) {
+        resizeObserver.observe(containerRef.current);
+      }
+  
+      return () => {
+        if (containerRef.current) {
+          resizeObserver.unobserve(containerRef.current);
+        }
+      };
+    }, []);
 
   const [bg] = useState('#2376AD');
   const [expanded, setExpanded] = React.useState(false);
