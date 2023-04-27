@@ -41,13 +41,13 @@ function Header() {
                     </>
                 )}
 
-                {/* {!user && 
+                {!user && 
                     (
                     <Button sx={{ ml: 120, px: 2, color: '#fff', border: '1.5px solid white', boxShadow: '0 2px 9px 0 #888888' }} onClick={() => navigate('/login')}>
                         Login <LoginRounded sx={{ color: '#fff' }} />
                     </Button>
                     ) 
-                } */}
+                }
                 
             </div>
 
