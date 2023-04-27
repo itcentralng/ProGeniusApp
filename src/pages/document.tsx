@@ -6,7 +6,7 @@ import Mascot from '../components/mascot';
 import proposals from '../components/proposals';
 import { AddBoxOutlined, RefreshOutlined, EditNote, PreviewTwoTone, SaveAs, ImportExportOutlined } from '@mui/icons-material';
 import { Editor } from '@tinymce/tinymce-react';
-import saveAs from 'file-saver';
+//import saveAs from 'file-saver';
 
 function DocumentView() {
     const location = useLocation();
@@ -91,7 +91,7 @@ function DocumentView() {
         }
     };
 
-    const handleExport = ()=>{
+    /*const handleExport = ()=>{
         const editor = previewEditorRef.current.editor; 
 
         if(editor){
@@ -102,7 +102,7 @@ function DocumentView() {
             const blob = new Blob([content], { type: 'text/html'});
             saveAs(blob, 'print.html');    
         }  
-    }
+    }*/
 
     useEffect(()=>{
         fetchProposal(); 
@@ -621,7 +621,7 @@ function DocumentView() {
                             <>
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Proposal Preview
-                            <Button onClick={handleExport}><ImportExportOutlined/></Button>
+                            {/* <Button onClick={handleExport}><ImportExportOutlined/></Button> */}
                             </Typography>
                             <Editor onEditorChange={()=>logPreview} 
                                 onInit={(evt, editor) => previewEditorRef.current = editor} 
