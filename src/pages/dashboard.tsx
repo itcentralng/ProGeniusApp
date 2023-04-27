@@ -77,7 +77,7 @@ function Dashboard() {
 
     return (
          
-        <div style={{minHeight: '93.8vh',background: '#000040',}}>
+        <div style={{minHeight: '93.8vh',}}>
         {/* <Container maxWidth='sm'>  */}
              
             <Header/>
@@ -89,7 +89,7 @@ function Dashboard() {
 
             <Grid sx={{p:4}} container>
                 <Grid item xs={12} sm={3} md={3} lg={3}></Grid>
-                <Grid item xs={12} sm={3} md={3} lg={3}><Typography variant='h3' sx={{color: '#3C0B79'}}>My Office</Typography></Grid>                
+                <Grid item xs={12} sm={3} md={3} lg={3}><Typography variant='h3' sx={{color: 'gold'}}>My Office</Typography></Grid>                
             </Grid>
             {/* <div style={{marginBottom: '2rem'}}></div> */}
             
