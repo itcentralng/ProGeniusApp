@@ -33,6 +33,7 @@ function Login() {
             setLoader(false);
             if (request.ok) {
                 localStorage.setItem('token', response.token); 
+                localStorage.setItem('email', response.user.email); 
                 navigate('/dashboard');
             }
         } catch (error) {
