@@ -76,11 +76,15 @@ function Proposals() {
     };
 
   return (
-    <div style={{minHeight: '90vh'}}>
+    <div style={{minHeight: '93.8vh' }}>
         {/* <Container maxWidth='sm'>  */}
              
             <Header/>
 
+            <div id='eclipse1' style={{position: 'absolute',width: '500px',height: '554px', left: 'calc(50% - 550px/2 - 282px)', top: '-99px',
+                background: 'rgba(138, 209, 210, 0.3)', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', filter: 'blur(199.5px)'}}></div>
+            <div id="eclipse2" style={{position: 'absolute',width: '500px', height: '536px', left: 'calc(50% - 550px/2 + 579px)', top: '286px',
+                background: 'rgba(138, 209, 210, 0.7)', filter: 'blur(199.5px)'}}></div>
                          
             <Grid sx={{}} container>
                 {/* <Grid item xs={12} sm={3} md={3} lg={3}></Grid>  */}
