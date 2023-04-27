@@ -49,11 +49,18 @@ const CounterCard = (data:Props)=> {
       <CardActions sx={{opacity: .8}}>
         <Button size='small' onClick={()=>navigate(nav, { state: data.items})}>View Details</Button>
         
-        <Button size='large' sx={{pl: '9rem'}}>
+        {/* <Button size='large' sx={{pl: '9rem'}} >
           {data?.title == 'Companies' && <AddBusinessTwoTone/>}
           {data?.title == 'Proposals' && <AddCardRounded/>}
           {data?.title != 'Proposals' && data?.title != 'Companies' && <AddBoxOutlined/>}
-        </Button>
+        </Button> */}
+
+        {data?.title == 'Companies' && <><Button size='large' sx={{pl: '9rem'}}  onClick={()=>navigate('/')}><AddBusinessTwoTone/></Button></>}
+        {data?.title == 'Proposals' && <><Button size='large' sx={{pl: '9rem'}}  onClick={()=>navigate('/document/new')}><AddCardRounded/></Button></>}
+        {data?.title != 'Proposals' && data?.title != 'Companies' && 
+        <><Button size='large' sx={{pl: '9rem'}}  onClick={()=>navigate('/')}><AddBoxOutlined/></Button></>}
+          
+
       </CardActions>
     </Card>
      
