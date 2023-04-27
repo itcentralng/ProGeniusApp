@@ -16,7 +16,7 @@ function Header() {
     }
 
     useEffect(()=>{
-        !user && navigate('/');
+        !user && window.location.pathname != '/register' && window.location.pathname != '/login' && navigate('/');
     },[])
 
     return (
