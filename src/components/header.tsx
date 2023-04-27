@@ -12,11 +12,11 @@ function Header() {
     const logout = ()=>{
         localStorage.removeItem('token');
         localStorage.removeItem('email');
-        navigate('/login')
+        navigate('/')
     }
 
     useEffect(()=>{
-        !user && navigate('/login');
+        !user && navigate('/');
     },[])
 
     return (
