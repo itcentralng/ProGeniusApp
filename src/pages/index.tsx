@@ -1,17 +1,29 @@
 import React from 'react';
+import '../components/fonts/quicksand.woff2';
+
 import {Routes, Route} from 'react-router-dom';
 import Proposals from '../components/proposals';
-import DocumentView from '../components/document';
+import DocumentView from './document';
 import Dashboard from './dashboard';
+import NewDocument from './newDocument';
+import Home from './home';
+import Register from './register';
+import Login from './login';
+
 
 
 const Main = ()=>{
   return (
     <Routes>
-        <Route path='/' element={<Dashboard/>} />
+        <Route path='/' element={<Home/>} />
+        <Route path='/register' element={<Register/>}/>
+        <Route path='/login' element={<Login/>}/>
+        
+        <Route path='/dashboard' element={<Dashboard/>} />
         <Route path='/proposals' element={<Proposals/>} />
         {/* <Route path='/document/:id' element={<DocumentView/>} /> */}
         <Route path='/document' element={<DocumentView/>} />
+        <Route path='/document/new' element={<NewDocument/>} />
     </Routes>
   )
 }

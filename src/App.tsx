@@ -8,13 +8,15 @@ import Main from './pages';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © Proposal.ai '}
-      <Link color="inherit" href="https://mui.com/">
-        Proposal AI Assistant
+    <div style={{background: '#000040', color:'#fff',  padding: '1rem'}}>
+    <Typography variant="body2" align="center">
+      {'Copyright © ProGenius. '}
+      <Link color="inherit" href="https://lablab.ai/">
+        Powered by Lablab.ai
       </Link>{' '}
       {new Date().getFullYear()}.
     </Typography>
+    </div>
   );
 }
 
@@ -22,7 +24,7 @@ export default function App() {
     
     return( 
      
-    <div style={{background: '#F4F9FC',minHeight: '100vh'}}>
+    <div style={{ minHeight: '98vh'}}>
     {/* <Container>
       <Box>
         <Main/>
