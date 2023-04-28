@@ -8,6 +8,9 @@ import { AddBoxOutlined, RefreshOutlined, EditNote, PreviewTwoTone, SaveAs, Impo
 import { Editor } from '@tinymce/tinymce-react';
 //import saveAs from 'file-saver';
 
+import templateDefault from '../components/images/default_template.png';
+import templateOne from '../components/images/template_one.png';
+
 function DocumentView() {
     const location = useLocation();
     const id = location.state;
@@ -46,6 +49,7 @@ function DocumentView() {
     const logAbout = () => {
         if (aboutEditorRef.current) {
             console.log(`ABOUT CONTENT: ${aboutEditorRef.current.getContent()}`);
+            improveProposal('about');
         }
     };
 
@@ -53,6 +57,7 @@ function DocumentView() {
     const logLetter = () => {
         if (letterEditorRef.current) {
             console.log(`LETTER CONTENT: ${letterEditorRef.current.getContent()}`);
+            improveProposal('letter');
         }
     };
 
@@ -60,6 +65,7 @@ function DocumentView() {
     const logProblem = () => {
         if (problemEditorRef.current) {
             console.log(`PROBLEM CONTENT: ${problemEditorRef.current.getContent()}`);
+            improveProposal('problem');
         }
     };
 
@@ -67,6 +73,7 @@ function DocumentView() {
     const logSolution = () => {
         if (solutionEditorRef.current) {
             console.log(`SOLUTION CONTENT: ${solutionEditorRef.current.getContent()}`);
+            improveProposal('solution');
         }
     };
 
@@ -74,6 +81,7 @@ function DocumentView() {
     const logImplementation = () => {
         if (implementationEditorRef.current) {
             console.log(`IMPLEMENTATION CONTENT: ${implementationEditorRef.current.getContent()}`);
+            improveProposal('implementation');
         }
     };
 
@@ -81,6 +89,7 @@ function DocumentView() {
     const logCost = () => {
         if (costEditorRef.current) {
             console.log(`COST CONTENT: ${costEditorRef.current.getContent()}`);
+            improveProposal('cost')
         }
     };
 
@@ -90,6 +99,27 @@ function DocumentView() {
             console.log(`PREVIEW CONTENT: ${previewEditorRef.current.getContent()}`);
         }
     };
+
+    const previewEditor2Ref:any = useRef(null);
+    const log2Preview = () => {
+        if (previewEditor2Ref.current) {
+            console.log(`PREVIEW CONTENT: ${previewEditor2Ref.current.getContent()}`);
+        }
+    };
+
+    const [templateDefaultView, setTemplateDefaultView] = useState(true);
+    const [templateOneView, setTemplateOneView] = useState(false);
+
+    const toggleTemplateView = (id:number)=>{
+        if(id == 0){
+            setTemplateDefaultView(true);
+            setTemplateOneView(false);
+        }
+        if(id == 1){
+            setTemplateDefaultView(false);
+            setTemplateOneView(true);
+        }
+    }
 
     /*const handleExport = ()=>{
         const editor = previewEditorRef.current.editor; 
@@ -280,34 +310,70 @@ function DocumentView() {
                 response.components.map((comp:any)=>{ 
                     if(component == comp.code && component == 'about'){                    
                         setAbout(comp.content);
-                        setAboutView(true); 
+                        setAboutView(true);
+
+                        setProblemView(false);
+                        setSolutionView(false);
+                        setImplementationView(false);
+                        setCostView(false);
+                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'problem'){
                         setProblem(comp.content);
                         setProblemView(true);
+                        
+                        setAboutView(false);
+                        setSolutionView(false);
+                        setImplementationView(false);
+                        setCostView(false);
+                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'solution'){
                         setSolution(comp.content);
                         setSolutionView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false); 
+                        setImplementationView(false);
+                        setCostView(false);
+                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'implementation'){
                         setImplementation(comp.content);
                         setImplementationView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false);
+                        setSolutionView(false); 
+                        setCostView(false);
+                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'cost'){
                         setCost(comp.cost);
                         console.log(`COST: ${cost}`)
                         setCostView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false);
+                        setSolutionView(false);
+                        setImplementationView(false); 
+                        setLetterView(false);
                     }
                     
                     if(component == comp.code && component == 'letter'){
                         setLetter(comp.letter);
-                        //console.log(`LETTER: ${letter}`);
+                        console.log(`LETTER: ${letter}`);
                         setLetterView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false);
+                        setSolutionView(false);
+                        setImplementationView(false);
+                        setCostView(false); 
                     }
                     
                     /*switch(component){
@@ -619,10 +685,34 @@ function DocumentView() {
                         {!loading && preview &&
                         (                            
                             <>
+                            <Grid container>
+                                <Grid item xs={12} md={12}><Typography variant='h4'>Templates</Typography></Grid> 
+                                <Grid item xs={12} md={4}>
+                                    <Button onClick={()=>toggleTemplateView(0)}>
+                                        <img src={`${templateDefault}`}  alt="Template Default" 
+                                        style={{width:'15rem',height:'20rem',boxShadow: '0 2px 9px 0 #888888', color: '#fff', border: '1px solid #fff'}}/>
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={12} md={4}>
+                                    <Button onClick={()=>toggleTemplateView(1)}>
+                                        <img src={`${templateOne}`}  alt="Template One"  
+                                        style={{width:'15rem',height:'20rem',boxShadow: '0 2px 9px 0 #888888', color: '#fff', border: '1px solid #fff'}}/>   
+                                    </Button>
+                                    
+                                </Grid> 
+                                <Grid item xs={12} md={4}>
+                                    <div style={{width:'15rem',height:'20rem',boxShadow: '0 2px 9px 0 #888888', background: '#fff', border: '1px solid #fff'}}>
+                                        <Typography variant='h5' sx={{p:5, color: '#000'}}>Coming soon...</Typography>
+                                    </div>
+                                </Grid>                                 
+                            </Grid>
+
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Proposal Preview
                             {/* <Button onClick={handleExport}><ImportExportOutlined/></Button> */}
                             </Typography>
+
+                            {templateDefaultView && ( 
                             <Editor onEditorChange={()=>logPreview} 
                                 onInit={(evt, editor) => previewEditorRef.current = editor} 
                                 initialValue=
@@ -691,6 +781,78 @@ function DocumentView() {
                                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                                 }}
                             />
+                            )}
+                            
+                            {templateOneView && (   
+                            <Editor onEditorChange={()=>log2Preview} 
+                                onInit={(evt, editor) => previewEditor2Ref.current = editor} 
+                                initialValue=
+                                {
+                                    
+                                    "<p style='text-align:right'>"
+                                    +company.name+", <br/>"
+                                    +companyAddress[0]+", <br/>"
+                                    +companyAddress[1]+", <br/>"
+                                    +companyAddress[2]+", <br/>"
+                                    +company.email+", <br/>"
+                                    +company.phone+", <br/>"
+                                    +"</p>"+
+
+                                    "<p align='center'><img src='"+company.logo+"' width=100 height=200/></p>"+
+
+                                    "<p style='text-align:left'>"
+                                    +client.role+", <br/>"
+                                    +client.name+", <br/>"
+                                    +clientAddress[0]+", <br/>"
+                                    +clientAddress[1]+", <br/>"
+                                    +clientAddress[2]+", <br/>"
+                                    +client.email+", <br/>"
+                                    +client.phone+", <br/>"
+                                    +"</p>"+
+
+                                    "<h4 style='text-decoration: underline'>"+offering?.toUpperCase()+"</h4>"+
+
+                                    "<p>"+letter+"</p><br/>"+
+                                    "<p style='padding-left: 80%'> Yours Sincerely,<br/> "+company.rep+"<br/>"+company.role+"<br/>"+"</p><br/>"+
+                                    "<!-- pagebreak -->" +
+
+                                    "<h4 style='text-decoration: underline'>About Us</h4>"+
+                                    "<p>"+about+"</p><br/>"+
+                                    "<!-- pagebreak -->" +
+
+                                    "<h4 style='text-decoration: underline'>Problem Statement</h4>"+
+                                    "<p>"+problem+"</p><br/>"+
+                                    "<!-- pagebreak -->" +
+
+                                    "<h4 style='text-decoration: underline'>Solution</h4>"+
+                                    "<p>"+solution+"</p><br/>"+
+                                    "<!-- pagebreak -->" +
+
+                                    "<h4 style='text-decoration: underline'>Implementation</h4>"+
+                                    "<p>"+implementation+"</p><br/>"+
+                                    "<!-- pagebreak -->" +
+
+                                    "<h4 style='text-decoration: underline'>Costing</h4>"+
+                                    "<p>"+cost+"</p><br/>"
+                                    
+
+                                }
+                                apiKey={TINY_MCE_TOKEN} 
+                                init={{
+                                height: 500,
+                                menubar: false,
+                                plugins: 
+                                    'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount pagebreak'
+                                ,
+                                toolbar: 'undo redo | formatselect | ' +
+                                'bold italic backcolor | alignleft aligncenter ' +
+                                'alignright alignjustify | bullist numlist outdent indent | ' +
+                                'pagebreak | ' +
+                                'removeformat | help',
+                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                }}
+                            />
+                            )}
                             {/* <button onClick={logCost}>Log editor content</button> */}
                             </>
                         )}     
