@@ -1,21 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react'
-import Header from '../components/header'
-import { useLocation, useNavigate } from 'react-router-dom'
+import Header from './header'
+import { useLocation } from 'react-router-dom'
 import { Box, Button, Grid, Typography } from '@mui/material';
-import Mascot from '../components/mascot';
-import proposals from '../components/proposals';
-import { AddBoxOutlined, RefreshOutlined, EditNote, PreviewTwoTone, SaveAs, ImportExportOutlined } from '@mui/icons-material';
+import Mascot from './mascot';
+import proposals from './proposals';
+import { AddBoxOutlined, RefreshOutlined, EditNote, PreviewTwoTone, SaveAs } from '@mui/icons-material';
 import { Editor } from '@tinymce/tinymce-react';
-//import saveAs from 'file-saver';
-
-import templateDefault from '../components/images/default_template.png';
-import templateOne from '../components/images/template_one.png';
 
 function DocumentView() {
     const location = useLocation();
     const id = location.state;
-
-    const navigate = useNavigate();
 
     const BASE_URL = process.env.REACT_APP_API_URL; 
     const BEARER_TOKEN = localStorage.getItem('token');
@@ -31,7 +25,6 @@ function DocumentView() {
     const [client, setClient]:any = useState({});
     const [company, setCompany]:any = useState({});
     const [offering, setOfferring] = useState('-');
-    const [description, setDescription] = useState('');
     const [companyAddress, setCompanyAddress]:any = useState([]);
     const [clientAddress, setClientAddress]:any = useState([]);
 
@@ -49,7 +42,6 @@ function DocumentView() {
     const logAbout = () => {
         if (aboutEditorRef.current) {
             console.log(`ABOUT CONTENT: ${aboutEditorRef.current.getContent()}`);
-            improveProposal('about');
         }
     };
 
@@ -57,7 +49,6 @@ function DocumentView() {
     const logLetter = () => {
         if (letterEditorRef.current) {
             console.log(`LETTER CONTENT: ${letterEditorRef.current.getContent()}`);
-            improveProposal('letter');
         }
     };
 
@@ -65,7 +56,6 @@ function DocumentView() {
     const logProblem = () => {
         if (problemEditorRef.current) {
             console.log(`PROBLEM CONTENT: ${problemEditorRef.current.getContent()}`);
-            improveProposal('problem');
         }
     };
 
@@ -73,7 +63,6 @@ function DocumentView() {
     const logSolution = () => {
         if (solutionEditorRef.current) {
             console.log(`SOLUTION CONTENT: ${solutionEditorRef.current.getContent()}`);
-            improveProposal('solution');
         }
     };
 
@@ -81,7 +70,6 @@ function DocumentView() {
     const logImplementation = () => {
         if (implementationEditorRef.current) {
             console.log(`IMPLEMENTATION CONTENT: ${implementationEditorRef.current.getContent()}`);
-            improveProposal('implementation');
         }
     };
 
@@ -89,7 +77,6 @@ function DocumentView() {
     const logCost = () => {
         if (costEditorRef.current) {
             console.log(`COST CONTENT: ${costEditorRef.current.getContent()}`);
-            improveProposal('cost')
         }
     };
 
@@ -100,53 +87,9 @@ function DocumentView() {
         }
     };
 
-    const previewEditor2Ref:any = useRef(null);
-    const log2Preview = () => {
-        if (previewEditor2Ref.current) {
-            console.log(`PREVIEW CONTENT: ${previewEditor2Ref.current.getContent()}`);
-        }
-    };
-
-    const [templateDefaultView, setTemplateDefaultView] = useState(true);
-    const [templateOneView, setTemplateOneView] = useState(false);
-
-    const toggleTemplateView = (id:number)=>{
-        if(id == 0){
-            setTemplateDefaultView(true);
-            setTemplateOneView(false);
-        }
-        if(id == 1){
-            setTemplateDefaultView(false);
-            setTemplateOneView(true);
-        }
-    }
-
-    /*const handleExport = ()=>{
-        const editor = previewEditorRef.current.editor; 
-
-        if(editor){
-            const content = editor.getContent(); 
-            editor.execCommand('mceRemoveEditor', false, editor.id);
-            editor.remove();
-
-            const blob = new Blob([content], { type: 'text/html'});
-            saveAs(blob, 'print.html');    
-        }  
-    }*/
-
     useEffect(()=>{
         fetchProposal(); 
     },[]); 
-
-    const handleClosePreviews = ()=>{
-        setAboutView(false);
-        setProblemView(false);
-        setSolutionView(false);
-        setImplementationView(false);
-        setCostView(false);
-        setLetterView(false);
-        setPreview(false);
-    }
 
     const fetchProposal = async () => {
         setLoading(true);
@@ -204,7 +147,6 @@ function DocumentView() {
             setClient(response.client);
             setCompany(response.company);
             setOfferring(response.offering);
-            setDescription(response.description);
             setCompanyAddress(response.company.address.split(','));
             setClientAddress(response.client.address.split(','));
             //setLoading(false);
@@ -236,32 +178,26 @@ function DocumentView() {
             response.components.map((comp:any)=>{ 
                 switch(component){
                     case 'about':
-                        handleClosePreviews()
                         setAbout(comp.content);
                         setAboutView(true);
                         break;
                     case 'problem':
-                        handleClosePreviews()
                         setProblem(comp.content);
                         setProblemView(true);
                         break;
                     case 'solution':
-                        handleClosePreviews()
                         setSolution(comp.content);
                         setSolutionView(true);
                         break;
                     case 'implementation':
-                        handleClosePreviews()
                         setImplementation(comp.content);
                         setImplementationView(true);
                         break;
                     case 'cost':
-                        handleClosePreviews()
                         setCost(comp.cost);
                         setCostView(true);
                         break;
                     case 'letter':
-                        handleClosePreviews()
                         setLetter(comp.letter);
                         setLetterView(true);
                         break;                        
@@ -287,35 +223,16 @@ function DocumentView() {
     const improveProposal = async (component:string) => {
         setLoading(true);
         console.log("fetching proposal...");
-
-        let index = 1;
-        switch(component){
-            case 'letter':
-                index = 1;
-                break;
-            case 'about':
-                index = 2;
-            case 'problem':
-                index = 3;
-            case 'solution':
-                index = 4;
-            case 'implementation':
-                index = 5;
-            case 'cost':
-                index = 6;
-        }
-
         try {
-            //const url = cost == '-'?`${BASE_URL}/proposal/${id}`:`${BASE_URL}/proposal/improve/${id}`;
-            const request = await fetch(`${BASE_URL}/proposal/${id}`, {
+            const url = cost == '-'?`${BASE_URL}/proposal/${id}`:`${BASE_URL}/proposal/improve/${id}`;
+            const request = await fetch(`${url}`,{ //fetch(`${BASE_URL}/proposal/improve/${id}`, {
                 method: 'POST',
                 headers: {
                 "Content-Type": "application/json",
                 authorization: `bearer ${BEARER_TOKEN}`,
                 },
                 body:JSON.stringify({
-                    component: component,
-                    index: index
+                    component: component
                 }),
             });
             const response = await request.json(); 
@@ -325,39 +242,32 @@ function DocumentView() {
                 
                 response.components.map((comp:any)=>{ 
                     if(component == comp.code && component == 'about'){                    
-                        handleClosePreviews()
                         setAbout(comp.content);
-                        setAboutView(true);
+                        setAboutView(true); 
                     }
 
                     if(component == comp.code && component == 'problem'){
-                        handleClosePreviews()
                         setProblem(comp.content);
                         setProblemView(true);
                     }
 
                     if(component == comp.code && component == 'solution'){
-                        handleClosePreviews()
                         setSolution(comp.content);
                         setSolutionView(true);
                     }
 
                     if(component == comp.code && component == 'implementation'){
-                        handleClosePreviews()
                         setImplementation(comp.content);
                         setImplementationView(true);
                     }
 
                     if(component == comp.code && component == 'cost'){
-                        handleClosePreviews()
                         setCost(comp.cost);
                         setCostView(true);
                     }
                     
                     if(component == comp.code && component == 'letter'){
-                        handleClosePreviews()
                         setLetter(comp.letter);
-                        console.log(`LETTER: ${letter}`);
                         setLetterView(true);
                     }
                     
@@ -406,39 +316,9 @@ function DocumentView() {
           console.log(error);
         }
     };
-
-    const saveProposal = async () => {
-        setLoading(true);
-        console.log("saving proposal...");
-        try {
-          const request = await fetch(`${BASE_URL}/proposal/${id}`, {
-            method: 'PATCH',
-            headers: {
-              "Content-Type": "application/json",
-              authorization: `bearer ${BEARER_TOKEN}`,
-            },
-            body:JSON.stringify({
-                company_id: id,
-                client_id: client.id,
-                offering,
-                description
-            }),
-          });
-          const response = await request.json(); 
-          setLoading(false);
-          if (request.ok) {
-            navigate('/proposals');
-            //setLoading(false);
-          }
-        } catch (error) {
-            setLoading(false);
-            alert(error)
-          console.log(error);
-        }
-    };
     
     return (
-        <div style={{ minHeight: '93.8vh' }}>
+        <div style={{ minHeight: '90vh' }}>
             <Header /> 
 
             <Grid sx={{}} container>
@@ -449,39 +329,39 @@ function DocumentView() {
 
             <Grid sx={{ px: 20 }} spacing={1} container >
                 <Grid item xs={12} sm={3} md={3} lg={3}>
-                    <Box sx={{ background: '#000040', width: '20rem', height: '28rem', boxShadow: '0 2px 9px 0 #888888', color: '#fff', border: '1px solid #fff' }}>
+                    <Box sx={{ background: '#3C0B79', width: '20rem', height: '28rem', boxShadow: '0 2px 9px 0 #888888', color: '#fff', border: '1px solid #fff' }}>
                         <Typography variant='h4' sx={{ p: 2, color: 'gold' }}>
                             Proposal Outline
                         </Typography>
 
                         <Grid container spacing={1} sx={{ px: 3 }}>
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>1. Covering Letter</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setLetterView(!letterView)}}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setLetterView(!letterView)}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('letter')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>2. About Us</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setAboutView(!aboutView)}}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setAboutView(!aboutView)}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }}  onClick={()=>improveProposal('about')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>3. Problem</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setProblemView(!problemView)}}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setProblemView(!problemView)}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('problem')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>4. Solution</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setSolutionView(!solutionView)}}><EditNote /></Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('solution')}><RefreshOutlined /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setSolutionView(!solutionView)}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>5. Implementation</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setImplementationView(!implementationView)}}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setImplementationView(!implementationView)}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('implementation')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>6. Cost</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setCostView(!costView)}}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setCostView(!costView)}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('cost')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>Preview</Button></Grid>
-                            <Grid item xs={6} sm={2} md={2} lg={2}><Button sx={{ color: '#fff' }} onClick={()=>{handleClosePreviews(); setPreview(!preview)}}><PreviewTwoTone /></Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={saveProposal}><SaveAs /></Button></Grid>
+                            <Grid item xs={6} sm={2} md={2} lg={2}><Button sx={{ color: '#fff' }} onClick={()=>setPreview(!preview)}><PreviewTwoTone /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }}><SaveAs /></Button></Grid>
                         </Grid>
                     </Box>
                 </Grid>
@@ -657,7 +537,7 @@ function DocumentView() {
                                 ],
                                 toolbar: 'undo redo | formatselect | ' +
                                 'bold italic backcolor | alignleft aligncenter ' +
-                                'alignright alignjustify | bullist numlist outdent indent | ' +                                 
+                                'alignright alignjustify | bullist numlist outdent indent | ' +
                                 'removeformat | help',
                                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                                 }}
@@ -670,34 +550,9 @@ function DocumentView() {
                         {!loading && preview &&
                         (                            
                             <>
-                            <Grid container>
-                                <Grid item xs={12} md={12}><Typography variant='h4'>Templates</Typography></Grid> 
-                                <Grid item xs={12} md={4}>
-                                    <Button onClick={()=>toggleTemplateView(0)}>
-                                        <img src={`${templateDefault}`}  alt="Template Default" 
-                                        style={{width:'15rem',height:'20rem',boxShadow: '0 2px 9px 0 #888888', color: '#fff', border: '1px solid #fff'}}/>
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={12} md={4}>
-                                    <Button onClick={()=>toggleTemplateView(1)}>
-                                        <img src={`${templateOne}`}  alt="Template One"  
-                                        style={{width:'15rem',height:'20rem',boxShadow: '0 2px 9px 0 #888888', color: '#fff', border: '1px solid #fff'}}/>   
-                                    </Button>
-                                    
-                                </Grid> 
-                                <Grid item xs={12} md={4}>
-                                    <div style={{width:'15rem',height:'20rem',boxShadow: '0 2px 9px 0 #888888', background: '#fff', border: '1px solid #fff'}}>
-                                        <Typography variant='h5' sx={{p:5, color: '#000'}}>Coming soon...</Typography>
-                                    </div>
-                                </Grid>                                 
-                            </Grid>
-
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Proposal Preview
-                            {/* <Button onClick={handleExport}><ImportExportOutlined/></Button> */}
                             </Typography>
-
-                            {templateDefaultView && ( 
                             <Editor onEditorChange={()=>logPreview} 
                                 onInit={(evt, editor) => previewEditorRef.current = editor} 
                                 initialValue=
@@ -766,69 +621,6 @@ function DocumentView() {
                                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                                 }}
                             />
-                            )}
-                            
-                            {templateOneView && (   
-                            <Editor onEditorChange={()=>log2Preview} 
-                                onInit={(evt, editor) => previewEditor2Ref.current = editor} 
-                                initialValue=
-                                {
-                                    "<div style='background: #000; color:#fff; padding: 1rem;'>"+
-                                         
-                                        +"<p style='text-align:left;width: 5rem; marginTop: 2rem'>"
-                                        +company.name+", <br/>"
-                                        +companyAddress[0]                                          
-                                        +"</p>"+
-
-                                         "<h4>"+offering?.toUpperCase()+"</h4>"+
-                                        "<h4 style='text-decoration: underline'>"+new Date(client.updated_at).getFullYear()+"</h4>"+
-                                         
-                                        "<table>"+
-                                        "<tr>Line</tr>"+
-                                        "</table>"+
-                                        
-
-                                        "<p>"+letter+"</p><br/>"+
-                                        "<p style='padding-left: 80%'> Yours Sincerely,<br/> "+company.rep+"<br/>"+company.role+"<br/>"+"</p><br/>"+
-                                        "<!-- pagebreak -->" +
-
-                                        "<h4 style='text-decoration: underline'>About Us</h4>"+
-                                        "<p>"+about+"</p><br/>"+
-                                        "<!-- pagebreak -->" +
-
-                                        "<h4 style='text-decoration: underline'>Problem Statement</h4>"+
-                                        "<p>"+problem+"</p><br/>"+
-                                        "<!-- pagebreak -->" +
-
-                                        "<h4 style='text-decoration: underline'>Solution</h4>"+
-                                        "<p>"+solution+"</p><br/>"+
-                                        "<!-- pagebreak -->" +
-
-                                        "<h4 style='text-decoration: underline'>Implementation</h4>"+
-                                        "<p>"+implementation+"</p><br/>"+
-                                        "<!-- pagebreak -->" +
-
-                                        "<h4 style='text-decoration: underline'>Costing</h4>"+
-                                        "<p>"+cost+"</p><br/>"+
-                                    "</div>"
-
-                                }
-                                apiKey={TINY_MCE_TOKEN} 
-                                init={{
-                                height: 500,
-                                menubar: false,
-                                plugins: 
-                                    'advlist autolink lists link image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount pagebreak'
-                                ,
-                                toolbar: 'undo redo | formatselect | ' +
-                                'bold italic backcolor | alignleft aligncenter ' +
-                                'alignright alignjustify | bullist numlist outdent indent | ' +
-                                'pagebreak | ' +
-                                'removeformat | help',
-                                content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                                }}
-                            />
-                            )}
                             {/* <button onClick={logCost}>Log editor content</button> */}
                             </>
                         )}     

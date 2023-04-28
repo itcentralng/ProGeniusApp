@@ -7,9 +7,10 @@ import Mascot from '../components/mascot'
 import logo from '../components/images/logo.png';
 import authComputer from '../components/images/auth_laptop.png';
 import authFlyman from '../components/images/auth_flyman.png';
+import { ScaleLoader } from "react-spinners";
 
 function Register() {
-    const BASE_URL = `https://ai.proposal.itcentral.ng`;
+    const BASE_URL = process.env.REACT_APP_API_URL;
     const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1OTM1MTEsImlhdCI6MTY4MjUwNzExNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.oCeMxP77br2_Lqs0E0OZRM4svSqBO0WgrsVue3bdi8s`;
     const navigate = useNavigate();
 
@@ -17,9 +18,9 @@ function Register() {
     const [password, setPassword] = useState('');
     const [loader, setLoader] = useState(false);
     const save = async () => {
-        setLoader(true);
         if(email == '' || password == '')return alert("All fields are required")
         try {
+            setLoader(true);
             const request = await fetch(`${BASE_URL}/register`, {
                 method: 'POST',
                 headers: {
@@ -50,7 +51,8 @@ function Register() {
 
             <div id='eclipse1' style={{
                 position: 'absolute', width: '500px', height: '554px', left: 'calc(50% - 550px/2 - 282px)', top: '-99px',
-                background: 'rgba(138, 209, 210, 0.3)', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', filter: 'blur(199.5px)'
+                background: 'rgba(138, 209, 210, 0.3)', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', filter: 'blur(199.5px)',
+                zIndex:-9999
             }}></div>
             <div id="eclipse2" style={{
                 position: 'absolute', width: '500px', height: '536px', left: 'calc(50% - 550px/2 + 579px)', top: '286px',
@@ -76,7 +78,6 @@ function Register() {
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6} lg={6} sx={{p:10, py:20}}>
-                    {!loader && (
                         <>
                             <Grid item xs={12} md={12}>
                                 <Typography variant='h2' sx={{color: '#fff', p: 1}}>
@@ -108,17 +109,13 @@ function Register() {
                             <Grid item xs={12}>
                                 <Button sx={{p: 2, width: '10rem', color: '#fff', border: '1.5px solid white', borderRadius: '5%', boxShadow:'0 2px 9px 0 #888888'}} 
                                 onClick={()=>save()}>
-                                    Signup
+                                    {loader ? (
+                                        <ScaleLoader color="#ffffff" height={15} />
+                                            ) : ("Signup")}
                                 </Button>
                             </Grid>
                         </>
-                    )}
-
-                    {loader && (
-                        <Grid item xs={12}>
-                            <div style={{ display: 'flex', alignContent: 'center', justifyContent: 'center' }}><CircularProgress color="secondary" /></div>
-                        </Grid>
-                    )}
+                    
                 </Grid>
 
             </Grid>
