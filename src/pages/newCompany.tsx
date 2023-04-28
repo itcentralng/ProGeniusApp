@@ -101,7 +101,7 @@ function NewCompany() {
             <Grid sx={{ p: 12 }} container spacing={1}>
                 <Card>
                     {/* <Typography variant='h3' sx={{ color: '#3C0B79',p:8, py:3, borderBottom: '1px solid black' }}>New Proposal</Typography> */}
-                    <Typography variant='h3' sx={{ background: '#3C0B79', color: '#fff', opacity: .7, p: 8, py: 3, borderBottom: '1px solid black' }}>New Company</Typography>
+                    <Typography variant='h3' sx={{ background: '#000040', color: '#fff', opacity: .7, p: 8, py: 3, borderBottom: '1px solid black' }}>New Company</Typography>
                     <CardContent>
 
                         {!loader && (
