@@ -56,7 +56,8 @@ function DocumentView() {
     const logAbout = () => {
         if (aboutEditorRef.current) {
             console.log(`ABOUT CONTENT: ${aboutEditorRef.current.getContent()}`);
-            improveWriting('about',aboutEditorRef.current.getContent(), aboutId);
+            setAbout(aboutEditorRef.current.getContent());
+            improveWriting('about',about, aboutId);
         }
     };
 
@@ -74,7 +75,7 @@ function DocumentView() {
         if (problemEditorRef.current) {
             console.log(`PROBLEM CONTENT: ${problemEditorRef.current.getContent()}`);
             setProblem(problemEditorRef.current.getContent());
-            improveWriting('problem',problem, problemId);
+            //improveWriting('problem',problem, problemId);
         }
     };
 
@@ -757,7 +758,7 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             About Us
                             </Typography>
-                            <Editor onEditorChange={()=>logAbout}  
+                            <Editor onEditorChange={logAbout}   
                                 onInit={(evt, editor) => aboutEditorRef.current = editor} 
                                 initialValue={"<p>"+about+"</p>"} 
                                 apiKey={TINY_MCE_TOKEN}
@@ -786,7 +787,7 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Covering Letter
                             </Typography>
-                            <Editor onEditorChange={()=>logLetter} 
+                            <Editor onEditorChange={logLetter} 
                                 onInit={(evt, editor) => letterEditorRef.current = editor} 
                                 initialValue={"<p>"+letter+"</p>"} 
                                 apiKey={TINY_MCE_TOKEN} 
@@ -816,7 +817,7 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Problem Statement
                             </Typography>
-                            <Editor onEditorChange={()=>logProblem} 
+                            <Editor onEditorChange={logProblem} 
                                 onInit={(evt, editor) => problemEditorRef.current = editor} 
                                 initialValue={"<p>"+problem+"</p>"} 
                                 apiKey={TINY_MCE_TOKEN} 
@@ -845,7 +846,7 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Solution
                             </Typography>
-                            <Editor onEditorChange={()=>logSolution} 
+                            <Editor onEditorChange={logSolution} 
                                 onInit={(evt, editor) => solutionEditorRef.current = editor} 
                                 initialValue={"<p>"+solution+"</p>"} 
                                 apiKey={TINY_MCE_TOKEN} 
@@ -874,7 +875,7 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Implementation
                             </Typography>
-                            <Editor onEditorChange={()=>logImplementation} 
+                            <Editor onEditorChange={logImplementation} 
                                 onInit={(evt, editor) => implementationEditorRef.current = editor} 
                                 initialValue={"<p>"+implementation+"</p>"} 
                                 apiKey={TINY_MCE_TOKEN}
@@ -903,7 +904,7 @@ function DocumentView() {
                             <Typography variant='h4' sx={{ p: 2, }}>
                             Costing
                             </Typography>
-                            <Editor onEditorChange={()=>logCost} 
+                            <Editor onEditorChange={logCost} 
                                 onInit={(evt, editor) => costEditorRef.current = editor} 
                                 initialValue={"<p>"+cost+"</p>"} 
                                 apiKey={TINY_MCE_TOKEN}
@@ -958,7 +959,7 @@ function DocumentView() {
                             </Typography>
 
                             {templateDefaultView && ( 
-                            <Editor onEditorChange={()=>logPreview} 
+                            <Editor onEditorChange={()=>logPreview()} 
                                 onInit={(evt, editor) => previewEditorRef.current = editor} 
                                 initialValue=
                                 {
@@ -1029,7 +1030,7 @@ function DocumentView() {
                             )}
                             
                             {templateOneView && (   
-                            <Editor onEditorChange={()=>log2Preview} 
+                            <Editor onEditorChange={()=>log2Preview()} 
                                 onInit={(evt, editor) => previewEditor2Ref.current = editor} 
                                 initialValue=
                                 {
