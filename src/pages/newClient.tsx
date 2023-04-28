@@ -27,16 +27,17 @@ function NewClient() {
     
      
 
-    const upload = async (event: { preventDefault: () => void; target: { files: (string | Blob)[]; }; }) => {
-        setLoader(true);
+    const upload = async (event: any) => {
+        // alert('Changed')
+        // setLoader(true);
         event.preventDefault();
         const data = new FormData();
         data.append('file',event.target.files[0] );
 
-        if ( logo == '' ){
-            setLoader(false);
-            return alert("File is required")
-        }
+        // if ( logo == '' ){
+        //     setLoader(false);
+        //     return alert("File is required")
+        // }
 
         try {
             
@@ -49,7 +50,8 @@ function NewClient() {
                 body: data,
             });
             const response = await request.json();
-            setLoader(false);
+            setLogo(response.url)
+            // setLoader(false);
             if (request.ok) {
                  
             }
@@ -68,7 +70,7 @@ function NewClient() {
         }
         try {
             setLoader(true);
-            setLogo('https://dhfspace.fra1.digitaloceanspaces.com/dhfspace/qjv7h55zq5.png');
+            // setLogo('https://dhfspace.fra1.digitaloceanspaces.com/dhfspace/qjv7h55zq5.png');
             const request = await fetch(`${BASE_URL}/client`, {
                 method: 'POST',
                 headers: {
@@ -93,7 +95,7 @@ function NewClient() {
 
     return (
 
-        <div style={{ height: '93.8vh', background: '#000040', }}>
+        <div style={{ background: '#000040', }}>
 
 
             <Header />
@@ -119,8 +121,8 @@ function NewClient() {
                                     />
                                 </Grid>
 
-                                {/* <Grid item xs={12} md={6}>
-                                    <TextField onChange={(e) => upload}
+                                <Grid item xs={12} md={6}>
+                                    <TextField onChange={upload}
                                         required
                                         id="logo"
                                         label="Logo"
@@ -130,7 +132,7 @@ function NewClient() {
                                         value={logo} 
                                         type='file'  
                                     />
-                                </Grid> */}
+                                </Grid>
 
                                 <Grid item xs={12} md={12}>
                                     <TextField onChange={(e) => setDescription(e.target.value)}
