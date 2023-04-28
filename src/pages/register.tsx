@@ -9,7 +9,7 @@ import authComputer from '../components/images/auth_laptop.png';
 import authFlyman from '../components/images/auth_flyman.png';
 
 function Register() {
-    const BASE_URL = `https://ai.proposal.itcentral.ng`;
+    const BASE_URL = process.env.REACT_APP_API_URL;
     const BEARER_TOKEN = `eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODI1OTM1MTEsImlhdCI6MTY4MjUwNzExNCwic3ViIjoxLCJyb2xlIjpudWxsfQ.oCeMxP77br2_Lqs0E0OZRM4svSqBO0WgrsVue3bdi8s`;
     const navigate = useNavigate();
 

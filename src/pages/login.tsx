@@ -10,7 +10,7 @@ import authFlyman from '../components/images/auth_flyman.png';
 import { ScaleLoader } from "react-spinners";
 
 function Login() {
-    const BASE_URL = `https://ai.proposal.itcentral.ng`;
+    const BASE_URL = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');

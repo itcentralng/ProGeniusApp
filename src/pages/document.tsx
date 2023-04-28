@@ -17,9 +17,9 @@ function DocumentView() {
 
     const navigate = useNavigate();
 
-    const BASE_URL = `https://ai.proposal.itcentral.ng`; 
+    const BASE_URL = process.env.REACT_APP_API_URL; 
     const BEARER_TOKEN = localStorage.getItem('token');
-    const TINY_MCE_TOKEN = `lp7iu5azuh7zvuobj0azvekuu5orfmemlhdlgc65mjeobzw2`;//`a9ymejj5q3wrnf2wwt1zxnjedqxog4oc9b6zgs7boba7rbcy`;
+    const TINY_MCE_TOKEN = process.env.REACT_APP_TINYMCE_KEY;//`a9ymejj5q3wrnf2wwt1zxnjedqxog4oc9b6zgs7boba7rbcy`;
 
     const [about, setAbout] = useState('-');
     const [problem, setProblem] = useState('-');
