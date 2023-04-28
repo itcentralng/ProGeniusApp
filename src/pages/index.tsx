@@ -9,6 +9,8 @@ import NewDocument from './newDocument';
 import Home from './home';
 import Register from './register';
 import Login from './login';
+import NewClient from './newClient';
+import NewCompany from './newCompany';
 
 
 
@@ -24,6 +26,9 @@ const Main = ()=>{
         {/* <Route path='/document/:id' element={<DocumentView/>} /> */}
         <Route path='/document' element={<DocumentView/>} />
         <Route path='/document/new' element={<NewDocument/>} />
+
+        <Route path='/client/new' element={<NewClient/>}/>
+        <Route path='/company/new' element={<NewCompany/>}/>
     </Routes>
   )
 }
