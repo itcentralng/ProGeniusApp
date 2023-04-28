@@ -387,7 +387,7 @@ function DocumentView() {
     };
     
     return (
-        <div style={{ minHeight: '90vh' }}>
+        <div style={{ minHeight: '93.8vh' }}>
             <Header /> 
 
             <Grid sx={{}} container>
