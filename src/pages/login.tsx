@@ -7,18 +7,19 @@ import Mascot from '../components/mascot'
 import logo from '../components/images/logo.png';
 import authComputer from '../components/images/auth_laptop.png';
 import authFlyman from '../components/images/auth_flyman.png';
+import { ScaleLoader } from "react-spinners";
 
 function Login() {
-    const BASE_URL = `https://ai.proposal.itcentral.ng`;
+    const BASE_URL = process.env.REACT_APP_API_URL;
     const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loader, setLoader] = useState(false);
     const save = async () => {
-        setLoader(true);
         if(email == '' || password == '')return alert("All fields are required")
         try {
+            setLoader(true);
             const request = await fetch(`${BASE_URL}/login`, {
                 method: 'POST',
                 headers: {
@@ -77,7 +78,6 @@ function Login() {
                 </Grid>
 
                 <Grid item xs={12} sm={6} md={6} lg={6} sx={{p:10, py:20}}>
-                    {!loader && (
                         <>
                             <Grid item xs={12} md={12}>
                                 <Typography variant='h2' sx={{color: '#fff', p: 1}}>
@@ -110,17 +110,14 @@ function Login() {
                             <Grid item xs={12}>
                                 <Button sx={{p: 2, width: '10rem', color: '#fff', border: '1.5px solid white', borderRadius: '5%', boxShadow:'0 2px 9px 0 #888888'}} 
                                 onClick={()=>save()}>
-                                    Login
+                                    {loader ? (
+                                        <ScaleLoader color="#ffffff" height={15} />
+                                            ) : ("Log in")}
                                 </Button>
                             </Grid>
                         </>
-                    )}
 
-                    {loader && (
-                        <Grid item xs={12}>
-                            <div style={{ display: 'flex', alignContent: 'center', justifyContent: 'center' }}><CircularProgress color="secondary" /></div>
-                        </Grid>
-                    )}
+                    
                 </Grid>
 
             </Grid>

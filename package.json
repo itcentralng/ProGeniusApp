@@ -16,6 +16,7 @@
     "react-dom": "latest",
     "react-router-dom": "^6.10.0",
     "react-scripts": "latest",
+    "react-spinners": "^0.13.8",
     "typescript": "latest"
   },
   "scripts": {
