@@ -164,7 +164,7 @@ function NewCompany() {
                                         fullWidth
                                         autoComplete="Rep"
                                         variant="standard"
-                                        value={role}
+                                        value={rep}
                                     />
                                 </Grid>
 

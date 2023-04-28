@@ -164,7 +164,7 @@ function NewClient() {
                                         fullWidth
                                         autoComplete="Rep"
                                         variant="standard"
-                                        value={role}
+                                        value={rep}
                                     />
                                 </Grid>
 
