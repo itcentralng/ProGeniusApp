@@ -17,9 +17,9 @@ function Login() {
     const [password, setPassword] = useState('');
     const [loader, setLoader] = useState(false);
     const save = async () => {
-        setLoader(true);
         if(email == '' || password == '')return alert("All fields are required")
         try {
+            setLoader(true);
             const request = await fetch(`${BASE_URL}/login`, {
                 method: 'POST',
                 headers: {
