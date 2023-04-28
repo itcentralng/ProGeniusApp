@@ -138,6 +138,16 @@ function DocumentView() {
         fetchProposal(); 
     },[]); 
 
+    const handleClosePreviews = ()=>{
+        setAboutView(false);
+        setProblemView(false);
+        setSolutionView(false);
+        setImplementationView(false);
+        setCostView(false);
+        setLetterView(false);
+        setPreview(false);
+    }
+
     const fetchProposal = async () => {
         setLoading(true);
         console.log("fetching proposal...");
@@ -226,26 +236,32 @@ function DocumentView() {
             response.components.map((comp:any)=>{ 
                 switch(component){
                     case 'about':
+                        handleClosePreviews()
                         setAbout(comp.content);
                         setAboutView(true);
                         break;
                     case 'problem':
+                        handleClosePreviews()
                         setProblem(comp.content);
                         setProblemView(true);
                         break;
                     case 'solution':
+                        handleClosePreviews()
                         setSolution(comp.content);
                         setSolutionView(true);
                         break;
                     case 'implementation':
+                        handleClosePreviews()
                         setImplementation(comp.content);
                         setImplementationView(true);
                         break;
                     case 'cost':
+                        handleClosePreviews()
                         setCost(comp.cost);
                         setCostView(true);
                         break;
                     case 'letter':
+                        handleClosePreviews()
                         setLetter(comp.letter);
                         setLetterView(true);
                         break;                        
@@ -309,71 +325,40 @@ function DocumentView() {
                 
                 response.components.map((comp:any)=>{ 
                     if(component == comp.code && component == 'about'){                    
+                        handleClosePreviews()
                         setAbout(comp.content);
                         setAboutView(true);
-
-                        setProblemView(false);
-                        setSolutionView(false);
-                        setImplementationView(false);
-                        setCostView(false);
-                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'problem'){
+                        handleClosePreviews()
                         setProblem(comp.content);
                         setProblemView(true);
-                        
-                        setAboutView(false);
-                        setSolutionView(false);
-                        setImplementationView(false);
-                        setCostView(false);
-                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'solution'){
+                        handleClosePreviews()
                         setSolution(comp.content);
                         setSolutionView(true);
-
-                        setProblemView(false);                        
-                        setAboutView(false); 
-                        setImplementationView(false);
-                        setCostView(false);
-                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'implementation'){
+                        handleClosePreviews()
                         setImplementation(comp.content);
                         setImplementationView(true);
-
-                        setProblemView(false);                        
-                        setAboutView(false);
-                        setSolutionView(false); 
-                        setCostView(false);
-                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'cost'){
+                        handleClosePreviews()
                         setCost(comp.cost);
-                        console.log(`COST: ${cost}`)
                         setCostView(true);
-
-                        setProblemView(false);                        
-                        setAboutView(false);
-                        setSolutionView(false);
-                        setImplementationView(false); 
-                        setLetterView(false);
                     }
                     
                     if(component == comp.code && component == 'letter'){
+                        handleClosePreviews()
                         setLetter(comp.letter);
                         console.log(`LETTER: ${letter}`);
                         setLetterView(true);
-
-                        setProblemView(false);                        
-                        setAboutView(false);
-                        setSolutionView(false);
-                        setImplementationView(false);
-                        setCostView(false); 
                     }
                     
                     /*switch(component){
@@ -471,31 +456,31 @@ function DocumentView() {
 
                         <Grid container spacing={1} sx={{ px: 3 }}>
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>1. Covering Letter</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setLetterView(!letterView)}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setLetterView(!letterView)}}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('letter')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>2. About Us</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setAboutView(!aboutView)}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setAboutView(!aboutView)}}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }}  onClick={()=>improveProposal('about')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>3. Problem</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setProblemView(!problemView)}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setProblemView(!problemView)}}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('problem')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>4. Solution</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setSolutionView(!solutionView)}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setSolutionView(!solutionView)}}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('solution')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>5. Implementation</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setImplementationView(!implementationView)}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setImplementationView(!implementationView)}}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('implementation')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>6. Cost</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>setCostView(!costView)}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setCostView(!costView)}}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('cost')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>Preview</Button></Grid>
-                            <Grid item xs={6} sm={2} md={2} lg={2}><Button sx={{ color: '#fff' }} onClick={()=>setPreview(!preview)}><PreviewTwoTone /></Button></Grid>
+                            <Grid item xs={6} sm={2} md={2} lg={2}><Button sx={{ color: '#fff' }} onClick={()=>{handleClosePreviews(); setPreview(!preview)}}><PreviewTwoTone /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={saveProposal}><SaveAs /></Button></Grid>
                         </Grid>
                     </Box>
