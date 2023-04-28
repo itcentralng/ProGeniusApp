@@ -91,7 +91,7 @@ const ProposalCard = (data: Props) => {
       };
     }, []);
 
-  const [bg] = useState('#2376AD');
+  const [bg] = useState('#000040');
   const [expanded, setExpanded] = React.useState(false);
   const [coveringLetter] = ['A','B','C'];//React.useState(data.components_content.split('\n'));
 
