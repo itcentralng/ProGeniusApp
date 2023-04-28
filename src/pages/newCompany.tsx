@@ -69,7 +69,7 @@ function NewCompany() {
         }
         try {
             setLogo('https://dhfspace.fra1.digitaloceanspaces.com/dhfspace/qjv7h55zq5.png');
-            const request = await fetch(`${BASE_URL}/client`, {
+            const request = await fetch(`${BASE_URL}/company`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
