@@ -51,7 +51,8 @@ function Register() {
 
             <div id='eclipse1' style={{
                 position: 'absolute', width: '500px', height: '554px', left: 'calc(50% - 550px/2 - 282px)', top: '-99px',
-                background: 'rgba(138, 209, 210, 0.3)', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', filter: 'blur(199.5px)'
+                background: 'rgba(138, 209, 210, 0.3)', boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)', filter: 'blur(199.5px)',
+                zIndex:-9999
             }}></div>
             <div id="eclipse2" style={{
                 position: 'absolute', width: '500px', height: '536px', left: 'calc(50% - 550px/2 + 579px)', top: '286px',
