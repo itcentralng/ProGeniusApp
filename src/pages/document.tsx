@@ -398,7 +398,7 @@ function DocumentView() {
 
             <Grid sx={{ px: 20 }} spacing={1} container >
                 <Grid item xs={12} sm={3} md={3} lg={3}>
-                    <Box sx={{ background: '#3C0B79', width: '20rem', height: '28rem', boxShadow: '0 2px 9px 0 #888888', color: '#fff', border: '1px solid #fff' }}>
+                    <Box sx={{ background: '#000040', width: '20rem', height: '28rem', boxShadow: '0 2px 9px 0 #888888', color: '#fff', border: '1px solid #fff' }}>
                         <Typography variant='h4' sx={{ p: 2, color: 'gold' }}>
                             Proposal Outline
                         </Typography>

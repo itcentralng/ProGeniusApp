@@ -88,7 +88,7 @@ function Proposals() {
                          
             <Grid sx={{}} container>
                 {/* <Grid item xs={12} sm={3} md={3} lg={3}></Grid>  */}
-                <Grid item xs={12} sm={9} md={9} lg={9} sx={{px:20, py: 2}}><Typography variant='h3' sx={{color: '#3C0B79'}}>Proposal Listings</Typography></Grid>
+                <Grid item xs={12} sm={9} md={9} lg={9} sx={{px:20, py: 2}}><Typography variant='h3' sx={{color: '#000040'}}>Proposal Listings</Typography></Grid>
                 <Grid item xs={12} sm={9} md={9} lg={9}><br/></Grid>
             </Grid> 
 
@@ -96,7 +96,7 @@ function Proposals() {
             <Masonry columns={3} spacing={2}>
                 {/* <Grid item xs={12} sm={3} md={3} lg={3}> */}
                     {/* <Box sx={{background:'#3C0B79',width: '20rem', height:'28rem', boxShadow: '0 2px 9px 0 #888888', color: '#fff', border:'1px solid #fff'}}> */}
-                    <Box sx={{background:'#3C0B79', boxShadow: '0 2px 9px 0 #888888', color: '#fff', border:'1px solid #fff'}}>
+                    <Box sx={{background:'#000040', boxShadow: '0 2px 9px 0 #888888', color: '#fff', border:'1px solid #fff'}}>
                         <Typography variant='h4' sx={{p:2, textAlign: 'center', color: 'gold'}}>
                             My Proposals
                             <Button sx={{color:'#fff'}}   onClick={()=>navigate('/document/new')}><AddCardRounded sx={{fontSize:'2rem'}}/></Button>
