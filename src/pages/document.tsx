@@ -17,9 +17,9 @@ function DocumentView() {
 
     const navigate = useNavigate();
 
-    const BASE_URL = process.env.REACT_APP_API_URL; 
+    const BASE_URL = `https://ai.proposal.itcentral.ng`; 
     const BEARER_TOKEN = localStorage.getItem('token');
-    const TINY_MCE_TOKEN = process.env.REACT_APP_TINYMCE_KEY;//`a9ymejj5q3wrnf2wwt1zxnjedqxog4oc9b6zgs7boba7rbcy`;
+    const TINY_MCE_TOKEN = `lp7iu5azuh7zvuobj0azvekuu5orfmemlhdlgc65mjeobzw2`;//`a9ymejj5q3wrnf2wwt1zxnjedqxog4oc9b6zgs7boba7rbcy`;
 
     const [about, setAbout] = useState('-');
     const [problem, setProblem] = useState('-');
@@ -27,6 +27,13 @@ function DocumentView() {
     const [implementation, setImplementation ] = useState('-');
     const [cost, setCost ] = useState('-');
     const [letter, setLetter] = useState('-');
+
+    const [aboutId, setAboutId] = useState(0);
+    const [problemId, setProblemId] = useState(0);
+    const [solutionId, setSolutionId ] = useState(0);
+    const [implementationId, setImplementationId ] = useState(0);
+    const [costId, setCostId ] = useState(0);
+    const [letterId, setLetterId] = useState(0);
 
     const [client, setClient]:any = useState({});
     const [company, setCompany]:any = useState({});
@@ -49,7 +56,7 @@ function DocumentView() {
     const logAbout = () => {
         if (aboutEditorRef.current) {
             console.log(`ABOUT CONTENT: ${aboutEditorRef.current.getContent()}`);
-            improveProposal('about');
+            improveWriting('about',aboutEditorRef.current.getContent(), aboutId);
         }
     };
 
@@ -57,7 +64,8 @@ function DocumentView() {
     const logLetter = () => {
         if (letterEditorRef.current) {
             console.log(`LETTER CONTENT: ${letterEditorRef.current.getContent()}`);
-            improveProposal('letter');
+            setLetter(letterEditorRef.current.getContent());
+            improveWriting('letter', letter, letterId);
         }
     };
 
@@ -65,7 +73,8 @@ function DocumentView() {
     const logProblem = () => {
         if (problemEditorRef.current) {
             console.log(`PROBLEM CONTENT: ${problemEditorRef.current.getContent()}`);
-            improveProposal('problem');
+            setProblem(problemEditorRef.current.getContent());
+            improveWriting('problem',problem, problemId);
         }
     };
 
@@ -73,7 +82,8 @@ function DocumentView() {
     const logSolution = () => {
         if (solutionEditorRef.current) {
             console.log(`SOLUTION CONTENT: ${solutionEditorRef.current.getContent()}`);
-            improveProposal('solution');
+            setSolution(solutionEditorRef.current.getContent())
+            improveWriting('solution',solution, solutionId);
         }
     };
 
@@ -81,7 +91,8 @@ function DocumentView() {
     const logImplementation = () => {
         if (implementationEditorRef.current) {
             console.log(`IMPLEMENTATION CONTENT: ${implementationEditorRef.current.getContent()}`);
-            improveProposal('implementation');
+            setImplementation(implementationEditorRef.current.getContent())
+            improveWriting('implementation',implementation, implementationId);
         }
     };
 
@@ -89,7 +100,8 @@ function DocumentView() {
     const logCost = () => {
         if (costEditorRef.current) {
             console.log(`COST CONTENT: ${costEditorRef.current.getContent()}`);
-            improveProposal('cost')
+            setCost(costEditorRef.current.getContent())
+            improveWriting('cost',cost, costId);
         }
     };
 
@@ -121,6 +133,97 @@ function DocumentView() {
         }
     }
 
+    const toggleSectionView = (component: string)=>{
+         
+            if(component == 'about'){    
+                setAboutView(true);
+
+                setProblemView(false);
+                setSolutionView(false);
+                setImplementationView(false);
+                setCostView(false);
+                setLetterView(false);
+
+                setPreview(false);
+            }
+
+            if(component == 'problem'){ 
+                setProblemView(true);
+                
+                setAboutView(false);
+                setSolutionView(false);
+                setImplementationView(false);
+                setCostView(false);
+                setLetterView(false);
+
+                setPreview(false);
+            }
+
+            if(component  == 'solution'){ 
+                setSolutionView(true);
+
+                setProblemView(false);                        
+                setAboutView(false); 
+                setImplementationView(false);
+                setCostView(false);
+                setLetterView(false);
+
+                setPreview(false);
+            }
+
+            if(component == 'implementation'){ 
+                setImplementationView(true);
+
+                setProblemView(false);                        
+                setAboutView(false);
+                setSolutionView(false); 
+                setCostView(false);
+                setLetterView(false);
+
+                setPreview(false);
+            }
+
+            if(component  == 'cost'){ 
+                console.log(`COST: ${cost}`)
+                setCostView(true);
+
+                setProblemView(false);                        
+                setAboutView(false);
+                setSolutionView(false);
+                setImplementationView(false); 
+                setLetterView(false);
+
+                setPreview(false);
+            }
+            
+            if(component  == 'letter'){ 
+                console.log(`LETTER: ${letter}`);
+                setLetterView(true);
+
+                setProblemView(false);                        
+                setAboutView(false);
+                setSolutionView(false);
+                setImplementationView(false);
+                setCostView(false); 
+
+                setPreview(false);
+            }
+
+            if(component  == 'preview'){ 
+                console.log(`LETTER: ${letter}`);
+                setLetterView(false);
+
+                setProblemView(false);                        
+                setAboutView(false);
+                setSolutionView(false);
+                setImplementationView(false);
+                setCostView(false); 
+                setPreview(true);
+            }
+            
+             
+    }
+
     /*const handleExport = ()=>{
         const editor = previewEditorRef.current.editor; 
 
@@ -137,16 +240,6 @@ function DocumentView() {
     useEffect(()=>{
         fetchProposal(); 
     },[]); 
-
-    const handleClosePreviews = ()=>{
-        setAboutView(false);
-        setProblemView(false);
-        setSolutionView(false);
-        setImplementationView(false);
-        setCostView(false);
-        setLetterView(false);
-        setPreview(false);
-    }
 
     const fetchProposal = async () => {
         setLoading(true);
@@ -173,21 +266,27 @@ function DocumentView() {
                 switch(component.code){
                     case 'about':
                         setAbout(component.content);
+                        setAboutId(component.id);
                         break;
                     case 'problem':
                         setProblem(component.content);
+                        setProblemId(component.id);
                         break;
                     case 'solution':
                         setSolution(component.content);
+                        setSolutionId(component.id);
                         break;
                     case 'implementation':
                         setImplementation(component.content);
+                        setImplementationId(component.id);
                         break;
                     case 'cost':
                         setCost(component.content);
+                        setCostId(component.id);
                         break;
                     case 'letter':
                         setLetter(component.content); 
+                        setLetterId(component.id);
                         break;                        
                 }
             });
@@ -236,32 +335,26 @@ function DocumentView() {
             response.components.map((comp:any)=>{ 
                 switch(component){
                     case 'about':
-                        handleClosePreviews()
                         setAbout(comp.content);
                         setAboutView(true);
                         break;
                     case 'problem':
-                        handleClosePreviews()
                         setProblem(comp.content);
                         setProblemView(true);
                         break;
                     case 'solution':
-                        handleClosePreviews()
                         setSolution(comp.content);
                         setSolutionView(true);
                         break;
                     case 'implementation':
-                        handleClosePreviews()
                         setImplementation(comp.content);
                         setImplementationView(true);
                         break;
                     case 'cost':
-                        handleClosePreviews()
                         setCost(comp.cost);
                         setCostView(true);
                         break;
                     case 'letter':
-                        handleClosePreviews()
                         setLetter(comp.letter);
                         setLetterView(true);
                         break;                        
@@ -325,40 +418,207 @@ function DocumentView() {
                 
                 response.components.map((comp:any)=>{ 
                     if(component == comp.code && component == 'about'){                    
-                        handleClosePreviews()
                         setAbout(comp.content);
                         setAboutView(true);
+
+                        setProblemView(false);
+                        setSolutionView(false);
+                        setImplementationView(false);
+                        setCostView(false);
+                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'problem'){
-                        handleClosePreviews()
                         setProblem(comp.content);
                         setProblemView(true);
+                        
+                        setAboutView(false);
+                        setSolutionView(false);
+                        setImplementationView(false);
+                        setCostView(false);
+                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'solution'){
-                        handleClosePreviews()
                         setSolution(comp.content);
                         setSolutionView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false); 
+                        setImplementationView(false);
+                        setCostView(false);
+                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'implementation'){
-                        handleClosePreviews()
                         setImplementation(comp.content);
                         setImplementationView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false);
+                        setSolutionView(false); 
+                        setCostView(false);
+                        setLetterView(false);
                     }
 
                     if(component == comp.code && component == 'cost'){
-                        handleClosePreviews()
                         setCost(comp.cost);
+                        console.log(`COST: ${cost}`)
                         setCostView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false);
+                        setSolutionView(false);
+                        setImplementationView(false); 
+                        setLetterView(false);
                     }
                     
                     if(component == comp.code && component == 'letter'){
-                        handleClosePreviews()
                         setLetter(comp.letter);
                         console.log(`LETTER: ${letter}`);
                         setLetterView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false);
+                        setSolutionView(false);
+                        setImplementationView(false);
+                        setCostView(false); 
+                    }
+                    
+                    /*switch(component){
+                        case 'about':
+                            setAbout(comp.content);
+                            setAboutView(true);
+                            break;
+                        case 'problem':
+                            setProblem(comp.content);
+                            setProblemView(true);
+                            break;
+                        case 'solution':
+                            setSolution(comp.content);
+                            setSolutionView(true);
+                            break;
+                        case 'implementation':
+                            setImplementation(comp.content);
+                            setImplementationView(true);
+                            break;
+                        case 'cost':
+                            setCost(comp.cost);
+                            setCostView(true);
+                            break;
+                        case 'letter':
+                            setLetter(comp.letter);
+                            setLetterView(true);
+                            break;                        
+                    }*/
+                });
+
+                if(response.components.length == 0){
+                    setAbout('-');
+                    setProblem('-');
+                    setSolution('-');
+                    setImplementation('-');
+                    setCost('-');
+                    setLetter('-');
+                }
+                console.log('IN IMPROVEMENT')
+                logPreview();
+                //setLoading(false);
+            }
+        } catch (error) {
+            setLoading(false);
+          console.log(error);
+        }
+    };
+
+    const improveWriting = async (component:string, content:string, id: number) => {
+        setLoading(true);
+        console.log("improving proposal...");
+         
+        try {
+            //const url = cost == '-'?`${BASE_URL}/proposal/${id}`:`${BASE_URL}/proposal/improve/${id}`;
+            const request = await fetch(`${BASE_URL}/component/${id}`, {
+                method: 'POST',
+                headers: {
+                "Content-Type": "application/json",
+                authorization: `bearer ${BEARER_TOKEN}`,
+                },
+                body:JSON.stringify({
+                    content: content, 
+                }),
+            });
+            const response = await request.json(); 
+            setLoading(false);
+            if (request.ok) {
+                //setProposal(response);  
+                
+                response.components.map((comp:any)=>{ 
+                    if(component == comp.code && component == 'about'){                    
+                        setAbout(comp.content);
+                        setAboutView(true);
+
+                        setProblemView(false);
+                        setSolutionView(false);
+                        setImplementationView(false);
+                        setCostView(false);
+                        setLetterView(false);
+                    }
+
+                    if(component == comp.code && component == 'problem'){
+                        setProblem(comp.content);
+                        setProblemView(true);
+                        
+                        setAboutView(false);
+                        setSolutionView(false);
+                        setImplementationView(false);
+                        setCostView(false);
+                        setLetterView(false);
+                    }
+
+                    if(component == comp.code && component == 'solution'){
+                        setSolution(comp.content);
+                        setSolutionView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false); 
+                        setImplementationView(false);
+                        setCostView(false);
+                        setLetterView(false);
+                    }
+
+                    if(component == comp.code && component == 'implementation'){
+                        setImplementation(comp.content);
+                        setImplementationView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false);
+                        setSolutionView(false); 
+                        setCostView(false);
+                        setLetterView(false);
+                    }
+
+                    if(component == comp.code && component == 'cost'){
+                        setCost(comp.cost);
+                        console.log(`COST: ${cost}`)
+                        setCostView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false);
+                        setSolutionView(false);
+                        setImplementationView(false); 
+                        setLetterView(false);
+                    }
+                    
+                    if(component == comp.code && component == 'letter'){
+                        setLetter(comp.letter);
+                        console.log(`LETTER: ${letter}`);
+                        setLetterView(true);
+
+                        setProblemView(false);                        
+                        setAboutView(false);
+                        setSolutionView(false);
+                        setImplementationView(false);
+                        setCostView(false); 
                     }
                     
                     /*switch(component){
@@ -456,31 +716,31 @@ function DocumentView() {
 
                         <Grid container spacing={1} sx={{ px: 3 }}>
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>1. Covering Letter</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setLetterView(!letterView)}}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>toggleSectionView('letter')}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('letter')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>2. About Us</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setAboutView(!aboutView)}}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>toggleSectionView('about')}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }}  onClick={()=>improveProposal('about')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>3. Problem</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setProblemView(!problemView)}}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>toggleSectionView('problem')}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('problem')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>4. Solution</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setSolutionView(!solutionView)}}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>toggleSectionView('solution')}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('solution')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>5. Implementation</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setImplementationView(!implementationView)}}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>toggleSectionView('implementation')}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('implementation')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>6. Cost</Button></Grid>
-                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>{handleClosePreviews(); setCostView(!costView)}}><EditNote /></Button></Grid>
+                            <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#87EACA' }} onClick={()=>toggleSectionView('cost')}><EditNote /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={()=>improveProposal('cost')}><RefreshOutlined /></Button></Grid>
 
                             <Grid item xs={6} sm={8} md={8} lg={8}><Button sx={{ color: '#fff' }}>Preview</Button></Grid>
-                            <Grid item xs={6} sm={2} md={2} lg={2}><Button sx={{ color: '#fff' }} onClick={()=>{handleClosePreviews(); setPreview(!preview)}}><PreviewTwoTone /></Button></Grid>
+                            <Grid item xs={6} sm={2} md={2} lg={2}><Button sx={{ color: '#fff' }} onClick={()=>toggleSectionView('preview')}><PreviewTwoTone /></Button></Grid>
                             <Grid item xs={3} sm={2} md={2} lg={2}><Button sx={{ color: '#F1C153' }} onClick={saveProposal}><SaveAs /></Button></Grid>
                         </Grid>
                     </Box>
@@ -491,7 +751,7 @@ function DocumentView() {
                         {loading && "Loading..."}
                         {!loading && !aboutView && !letterView && !problemView && !solutionView && !implementationView  && !costView && !preview 
                         && <><Mascot/> <Typography variant='h6' sx={{ p: 2, }}>Conjure Something...Use the proposal outline to start.</Typography></>}
-                        {loading && about && aboutView &&
+                        {!loading && about && aboutView &&
                         (                            
                             <>
                             <Typography variant='h4' sx={{ p: 2, }}>
@@ -829,7 +1089,7 @@ function DocumentView() {
                                 }}
                             />
                             )}
-                            {/* <button onClick={logCost}>Log editor content</button> */}
+                            {/* <button onClick={logCost}>Log editor content</button> */} 
                             </>
                         )}     
 
