@@ -788,53 +788,44 @@ function DocumentView() {
                                 onInit={(evt, editor) => previewEditor2Ref.current = editor} 
                                 initialValue=
                                 {
-                                    
-                                    "<p style='text-align:right'>"
-                                    +company.name+", <br/>"
-                                    +companyAddress[0]+", <br/>"
-                                    +companyAddress[1]+", <br/>"
-                                    +companyAddress[2]+", <br/>"
-                                    +company.email+", <br/>"
-                                    +company.phone+", <br/>"
-                                    +"</p>"+
+                                    "<div style='background: #000; color:#fff; padding: 1rem;'>"+
+                                         
+                                        +"<p style='text-align:left;width: 5rem; marginTop: 2rem'>"
+                                        +company.name+", <br/>"
+                                        +companyAddress[0]                                          
+                                        +"</p>"+
 
-                                    "<p align='center'><img src='"+company.logo+"' width=100 height=200/></p>"+
+                                         "<h4>"+offering?.toUpperCase()+"</h4>"+
+                                        "<h4 style='text-decoration: underline'>"+new Date(client.updated_at).getFullYear()+"</h4>"+
+                                         
+                                        "<table>"+
+                                        "<tr>Line</tr>"+
+                                        "</table>"+
+                                        
 
-                                    "<p style='text-align:left'>"
-                                    +client.role+", <br/>"
-                                    +client.name+", <br/>"
-                                    +clientAddress[0]+", <br/>"
-                                    +clientAddress[1]+", <br/>"
-                                    +clientAddress[2]+", <br/>"
-                                    +client.email+", <br/>"
-                                    +client.phone+", <br/>"
-                                    +"</p>"+
+                                        "<p>"+letter+"</p><br/>"+
+                                        "<p style='padding-left: 80%'> Yours Sincerely,<br/> "+company.rep+"<br/>"+company.role+"<br/>"+"</p><br/>"+
+                                        "<!-- pagebreak -->" +
 
-                                    "<h4 style='text-decoration: underline'>"+offering?.toUpperCase()+"</h4>"+
+                                        "<h4 style='text-decoration: underline'>About Us</h4>"+
+                                        "<p>"+about+"</p><br/>"+
+                                        "<!-- pagebreak -->" +
 
-                                    "<p>"+letter+"</p><br/>"+
-                                    "<p style='padding-left: 80%'> Yours Sincerely,<br/> "+company.rep+"<br/>"+company.role+"<br/>"+"</p><br/>"+
-                                    "<!-- pagebreak -->" +
+                                        "<h4 style='text-decoration: underline'>Problem Statement</h4>"+
+                                        "<p>"+problem+"</p><br/>"+
+                                        "<!-- pagebreak -->" +
 
-                                    "<h4 style='text-decoration: underline'>About Us</h4>"+
-                                    "<p>"+about+"</p><br/>"+
-                                    "<!-- pagebreak -->" +
+                                        "<h4 style='text-decoration: underline'>Solution</h4>"+
+                                        "<p>"+solution+"</p><br/>"+
+                                        "<!-- pagebreak -->" +
 
-                                    "<h4 style='text-decoration: underline'>Problem Statement</h4>"+
-                                    "<p>"+problem+"</p><br/>"+
-                                    "<!-- pagebreak -->" +
+                                        "<h4 style='text-decoration: underline'>Implementation</h4>"+
+                                        "<p>"+implementation+"</p><br/>"+
+                                        "<!-- pagebreak -->" +
 
-                                    "<h4 style='text-decoration: underline'>Solution</h4>"+
-                                    "<p>"+solution+"</p><br/>"+
-                                    "<!-- pagebreak -->" +
-
-                                    "<h4 style='text-decoration: underline'>Implementation</h4>"+
-                                    "<p>"+implementation+"</p><br/>"+
-                                    "<!-- pagebreak -->" +
-
-                                    "<h4 style='text-decoration: underline'>Costing</h4>"+
-                                    "<p>"+cost+"</p><br/>"
-                                    
+                                        "<h4 style='text-decoration: underline'>Costing</h4>"+
+                                        "<p>"+cost+"</p><br/>"+
+                                    "</div>"
 
                                 }
                                 apiKey={TINY_MCE_TOKEN} 
