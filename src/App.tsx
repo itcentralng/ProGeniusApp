@@ -11,8 +11,8 @@ function Copyright() {
     <div style={{background: '#000040', color:'#fff',  padding: '1rem'}}>
     <Typography variant="body2" align="center">
       {'Copyright © ProGenius. '}
-      <Link color="inherit" href="https://lablab.ai/">
-        Powered by Lablab.ai
+      <Link color="inherit" href="http://ai21.com">
+        Powered by AI21
       </Link>{' '}
       {new Date().getFullYear()}.
     </Typography>

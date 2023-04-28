@@ -44,7 +44,7 @@ function Register() {
 
     return (
 
-        <div style={{ height: '93.8vh', background: '#000040', }}>
+        <div style={{ background: '#000040', }}>
 
             <Header />
 
@@ -71,7 +71,7 @@ function Register() {
                     <img src={authFlyman} alt="Computer Person" width={'600rem'} height={'600rem'}
                         style={{
                             padding: '1rem', position: 'absolute', left: 'calc(9% - 714px/2 + 554px)', top: '178px',
-                            transform: 'matrix(-1, 0, 0, 1, 0, 0)', zIndex: 100
+                            transform: 'matrix(-1, 0, 0, 1, 0, 0)'
                         }} />
                 </Grid>
 
