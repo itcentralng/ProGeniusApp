@@ -55,10 +55,10 @@ const CounterCard = (data:Props)=> {
           {data?.title != 'Proposals' && data?.title != 'Companies' && <AddBoxOutlined/>}
         </Button> */}
 
-        {data?.title == 'Companies' && <><Button size='large' sx={{pl: '9rem'}}  onClick={()=>navigate('/')}><AddBusinessTwoTone/></Button></>}
+        {data?.title == 'Companies' && <><Button size='large' sx={{pl: '9rem'}}  onClick={()=>navigate('/company/new')}><AddBusinessTwoTone/></Button></>}
         {data?.title == 'Proposals' && <><Button size='large' sx={{pl: '9rem'}}  onClick={()=>navigate('/document/new')}><AddCardRounded/></Button></>}
         {data?.title != 'Proposals' && data?.title != 'Companies' && 
-        <><Button size='large' sx={{pl: '9rem'}}  onClick={()=>navigate('/')}><AddBoxOutlined/></Button></>}
+        <><Button size='large' sx={{pl: '9rem'}}  onClick={()=>navigate('/client/new')}><AddBoxOutlined/></Button></>}
           
 
       </CardActions>
