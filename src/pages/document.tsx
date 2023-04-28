@@ -351,11 +351,11 @@ function DocumentView() {
                         setImplementationView(true);
                         break;
                     case 'cost':
-                        setCost(comp.cost);
+                        setCost(comp.content);
                         setCostView(true);
                         break;
                     case 'letter':
-                        setLetter(comp.letter);
+                        setLetter(comp.content);
                         setLetterView(true);
                         break;                        
                 }
@@ -462,7 +462,7 @@ function DocumentView() {
                     }
 
                     if(component == comp.code && component == 'cost'){
-                        setCost(comp.cost);
+                        setCost(comp.content);
                         console.log(`COST: ${cost}`)
                         setCostView(true);
 
@@ -474,7 +474,7 @@ function DocumentView() {
                     }
                     
                     if(component == comp.code && component == 'letter'){
-                        setLetter(comp.letter);
+                        setLetter(comp.content);
                         console.log(`LETTER: ${letter}`);
                         setLetterView(true);
 
@@ -503,11 +503,11 @@ function DocumentView() {
                             setImplementationView(true);
                             break;
                         case 'cost':
-                            setCost(comp.cost);
+                            setCost(comp.content);
                             setCostView(true);
                             break;
                         case 'letter':
-                            setLetter(comp.letter);
+                            setLetter(comp.content);
                             setLetterView(true);
                             break;                        
                     }*/
@@ -598,7 +598,7 @@ function DocumentView() {
                     }
 
                     if(component == comp.code && component == 'cost'){
-                        setCost(comp.cost);
+                        setCost(comp.content);
                         console.log(`COST: ${cost}`)
                         setCostView(true);
 
@@ -610,7 +610,7 @@ function DocumentView() {
                     }
                     
                     if(component == comp.code && component == 'letter'){
-                        setLetter(comp.letter);
+                        setLetter(comp.content);
                         console.log(`LETTER: ${letter}`);
                         setLetterView(true);
 
@@ -639,11 +639,11 @@ function DocumentView() {
                             setImplementationView(true);
                             break;
                         case 'cost':
-                            setCost(comp.cost);
+                            setCost(comp.content);
                             setCostView(true);
                             break;
                         case 'letter':
-                            setLetter(comp.letter);
+                            setLetter(comp.content);
                             setLetterView(true);
                             break;                        
                     }*/
