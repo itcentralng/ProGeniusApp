@@ -11,6 +11,7 @@ import Register from './register';
 import Login from './login';
 import NewClient from './newClient';
 import NewCompany from './newCompany';
+import Template from './template';
 
 
 
@@ -29,6 +30,8 @@ const Main = ()=>{
 
         <Route path='/client/new' element={<NewClient/>}/>
         <Route path='/company/new' element={<NewCompany/>}/>
+
+        <Route path='/template' element={<Template/>}/>
     </Routes>
   )
 }

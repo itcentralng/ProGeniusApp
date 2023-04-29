@@ -47,6 +47,13 @@ function DocumentView() {
     const gotoPreview = (templateId: number)=>{
         // take user to the preview page on a new tab and show the page
         // with the selected styles.
+        navigate('/template',
+        { 
+            state : {
+                template: templateId,
+                proposal
+            }
+        });
     }
 
 
