@@ -185,7 +185,8 @@ function DocumentView() {
                                 apiKey={TINY_MCE_TOKEN}
                                 init={{
                                     height: 500,
-                                    menubar: true,
+                                    menubar: false,
+                                    branding: false,
                                     plugins: [
                                         'advlist autolink lists link image charmap print preview anchor',
                                         'searchreplace visualblocks code fullscreen',
