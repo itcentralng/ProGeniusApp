@@ -21,21 +21,21 @@ function Template() {
         setProposal(location.state.proposal);
     }, []);
 
-    const [cover, setCover] = useState(1);
-    const [about, setAbout] = useState(0);
+    const [cover, setCover] = useState(true);
+    const [about, setAbout] = useState(false);
     const toggleSection = (sectionId: number) => {
         switch (sectionId) {
             case 1:
-                setCover(1);
-                setAbout(0);
+                setCover(true);
+                setAbout(false);
                 break;
             case 2:
-                setCover(0);
-                setAbout(1);
+                setCover(false);
+                setAbout(true);
                 break;
             default:
-                setCover(1);
-                setAbout(0);
+                setCover(true);
+                setAbout(false);
         }
     }
 
@@ -132,12 +132,13 @@ function Template() {
                             )}
 
                             {about && (
-                                <Grid sx={{ p: 6, color: '#fff' }} container spacing={4}>
+                                <Grid sx={{ p: 6, color: '#fff'}} container spacing={1}>
 
-                                    <Grid item xs={12} md={6}>
-                                        <Grid item xs={12} md={12} sx={{display:'flex', justifyContent: 'center', alignContent: 'end',}}>
-                                            <Grid item xs={6} md={9}></Grid>
-                                            <Grid item xs={6} md={3}>
+                                    <Grid item xs={12} md={12}>
+                                        <Grid item xs={12} md={12} 
+                                        sx={{display:'flex', justifyContent: 'center', alignContent: 'end',}}>
+                                            <Grid item xs={6} md={10}></Grid>
+                                            <Grid item xs={6} md={2}>
                                                 <div style={{ width: '60%', border: '3px solid #fff', margin:'.5rem' }}></div>
                                                 <div style={{ width: '40%', border: '3px solid #fff', margin:'.5rem' }}></div>
                                                 <div style={{ width: '20%', border: '3px solid #fff', margin:'.5rem' }}></div>
@@ -166,14 +167,14 @@ function Template() {
                                             )}  
                                         </Grid>
 
-                                        <Grid item xs={12} md={12} sx={{ width: '100%',   my: 2 ,}}>
+                                        <Grid item xs={12} md={12} sx={{ minWidth: '100%',   my: 2 , textAlign:'justify'}}>
                                         {proposal?.components?.filter((c:any)=>c.code == 'about')[0]?.content}
                                         </Grid>
                                     </Grid>
 
-                                    <Grid container spacing={1} xs={12} md={12} sx={{ my: 5, mx: 2 }}>
-                                        <Grid item xs={12} sm={12} md={12} lg={12}>                                         
-                                            <div style={{ height: '5rem',borderBottom: '3px solid #fff', }}></div> 
+                                    <Grid container spacing={1} xs={12} md={12} sx={{ my: 5,}}>
+                                        <Grid item xs={12} sm={12} md={12} lg={12}>                                                                               
+                                            <Typography variant='h5'  sx={{ borderBottom: '3px solid #fff'}}>Proposal: {proposal?.offering}</Typography>                                             
                                         </Grid>
                                     </Grid>
 
