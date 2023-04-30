@@ -39,6 +39,18 @@ function Template() {
     const [solution, setSolution] = useState(false);
     const [cost, setCost] = useState(false);
 
+    const splitStringByWhitespace = (str: string) =>{
+        if (str){
+            const words = str.split(' ');
+            const mid = Math.ceil(words.length / 2);
+            const part1 = words.slice(0, mid).join(' ');
+            const part2 = words.slice(mid).join(' ');
+            return [part1, part2];
+        }
+        return ['', '']
+      }
+      
+
     const toggleSection = (sectionId: number) => {
         switch (sectionId) {
             case 1:
@@ -219,9 +231,9 @@ function Template() {
 
                                             <Grid item xs={12} md={12} sx={{ width: '40%', height: '50vh', border: '3px solid #fff', my: 2 }}>
                                                 <Grid item xs={12} md={12} sx={{ m: 8, my: 15, p: 1, background: 'black', minWidth: '100%' }}>
-                                                    <Grid item xs={12} md={12}><Typography variant='h3' sx={{ fontWeight: 'bold', color: 'gold' }}>Proposal</Typography></Grid>
-                                                    <Grid item xs={12} md={12} sx={{ minWidth: '25rem' }}><Typography variant='h4'>{proposal?.offering}</Typography></Grid>
-                                                    <Grid item xs={12} md={12}><Typography variant='h5' sx={{ borderBottom: '1px solid #fff' }}>{new Date(proposal.updated_at).getFullYear()}</Typography></Grid>
+                                                    <Grid item xs={12} md={12}><Typography variant='h3' sx={{ fontWeight: 'bold', color: 'gold' }}>{splitStringByWhitespace(proposal?.offering)[0]}</Typography></Grid>
+                                                    <Grid item xs={12} md={12} sx={{ minWidth: '25rem' }}><Typography variant='h4'>{splitStringByWhitespace(proposal?.offering)[1]}</Typography></Grid>
+                                                    {/* <Grid item xs={12} md={12}><Typography variant='h5' sx={{ borderBottom: '1px solid #fff' }}>{new Date(proposal.updated_at).getFullYear()}</Typography></Grid> */}
                                                 </Grid>
                                             </Grid>
                                         </Grid>
@@ -233,7 +245,7 @@ function Template() {
                                             </Grid>
 
                                             <Grid item xs={12} sm={7} md={7} lg={7}>
-                                                <Typography variant='h5' sx={{ px: 15 }}>ORGANIZED BY:</Typography>
+                                                <Typography variant='h5' sx={{ px: 15 }}>PREPARED BY:</Typography>
                                                 <Typography variant='h6' sx={{ px: 15 }}>{proposal?.company?.name}</Typography>
                                             </Grid>
                                         </Grid>
@@ -274,7 +286,7 @@ function Template() {
                                             </Grid>                                            
 
                                             <Grid item xs={12} md={12} sx={{ minWidth: '100%', my: 2, textAlign: 'justify' }}>
-                                                {proposal?.components?.filter((c: any) => c.code == 'letter')[0]?.content}
+                                            <div dangerouslySetInnerHTML={{ __html: proposal?.components?.find((c: any) => c.code == 'letter')?.content }}></div>
                                             </Grid>
 
                                             
@@ -318,7 +330,7 @@ function Template() {
                                         <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'start', alignContent: 'center', }}>
                                             {proposal?.company?.logo != '' && (
                                                 <>
-                                                    <img src={coverImage} alt="Company Image" style={{ width: '20rem', height: '20rem' }} />
+                                                    <img src={problemStatementImage} alt="Company Image" style={{ width: '20rem', height: '20rem' }} />
                                                     <div style={{ height: '5rem', marginLeft: '10rem', borderLeft: '3px solid #fff' }}></div>
                                                 </>
                                             )}
@@ -331,7 +343,8 @@ function Template() {
                                         </Grid>
 
                                         <Grid item xs={12} md={12} sx={{ minWidth: '100%', my: 2, textAlign: 'justify' }}>
-                                            {proposal?.components?.filter((c: any) => c.code == 'about')[0]?.content}
+                                            {/* {proposal?.components?.filter((c: any) => c.code == 'about')[0]?.content} */}
+                                            <div dangerouslySetInnerHTML={{ __html: proposal?.components?.find((c: any) => c.code == 'about')?.content }}></div>
                                         </Grid>
                                     </Grid>
 
@@ -373,7 +386,8 @@ function Template() {
                                         </Grid>
 
                                         <Grid item xs={12} md={12} sx={{ minWidth: '100%', my: 2, textAlign: 'justify' }}>
-                                            {proposal?.components?.filter((c: any) => c.code == 'problem')[0]?.content}
+                                            {/* {proposal?.components?.filter((c: any) => c.code == 'problem')[0]?.content} */}
+                                            <div dangerouslySetInnerHTML={{ __html: proposal?.components?.find((c: any) => c.code == 'problem')?.content }}></div>
                                         </Grid>
                                     </Grid>
 
@@ -416,105 +430,7 @@ function Template() {
 
                                         <Grid item xs={12} md={12} sx={{ minWidth: '100%', my: 2, textAlign: 'justify' }}>
                                             {/* {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.split(':')[0]}: */}
-                                            <br />
-                                            {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
-                                                slice(0, (proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':')))
-                                            }:
-                                            <br /><br />
-                                            <Typography>
-                                                <span style={{
-                                                    width: '1rem', height: '1rem', border: '2px solid white', background: 'grey',
-                                                    borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'
-                                                }}>1.</span>
-                                                <span>
-                                                    {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
-                                                        slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf('1.')) + 2)?.
-                                                        split('2.')[0]
-                                                    }
-                                                </span>
-                                            </Typography>
-                                            <br /><br />
-
-                                            <Typography>
-                                                <span style={{
-                                                    width: '1rem', height: '1rem', border: '2px solid white', background: 'grey',
-                                                    borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'
-                                                }}>2.</span>
-                                                <span>
-                                                    {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
-                                                        slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':')) + 1)?.
-                                                        split('2.')[1]?.
-                                                        split('3.')[0]
-                                                    }
-                                                </span>
-                                            </Typography>
-                                            <br /><br />
-
-                                            <Typography>
-                                                <span style={{
-                                                    width: '1rem', height: '1rem', border: '2px solid white', background: 'grey',
-                                                    borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'
-                                                }}>3.</span>
-                                                <span>
-                                                    {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
-                                                        slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':')) + 1)?.
-                                                        split('3.')[1]?.
-                                                        split('4.')[0]
-                                                    }
-                                                </span>
-                                            </Typography>
-                                            <br /><br />
-
-                                            <Typography>
-                                                <span style={{
-                                                    width: '1rem', height: '1rem', border: '2px solid white', background: 'grey',
-                                                    borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'
-                                                }}>4.</span>
-                                                <span>
-                                                    {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
-                                                        slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':')) + 1)?.
-                                                        split('4.')[1]?.
-                                                        split('5.')[0]
-                                                    }
-                                                </span>
-                                            </Typography>
-                                            <br /><br />
-
-                                            <Typography>
-                                                <span style={{
-                                                    width: '1rem', height: '1rem', border: '2px solid white', background: 'grey',
-                                                    borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'
-                                                }}>5.</span>
-                                                <span>
-                                                    {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
-                                                        slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':')) + 1)?.
-                                                        split('5.')[1]?.
-                                                        split('6.')[0]
-                                                    }
-                                                </span>
-                                            </Typography>
-                                            <br /><br />
-
-                                            <Typography>
-                                                <span style={{
-                                                    width: '1rem', height: '1rem', border: '2px solid white', background: 'grey',
-                                                    borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'
-                                                }}>6.</span>
-                                                <span>
-                                                    {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
-                                                        slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':')) + 1)?.
-                                                        split('6.')[1]?.
-                                                        split('7.')[0]
-                                                    }
-                                                    <br /><br />
-                                                    {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
-                                                        slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':')) + 1)?.
-                                                        split('7.')[1]?.
-                                                        split('8.')[0]
-                                                    }
-                                                </span>
-                                            </Typography>
-                                            <br /><br />
+                                            <div dangerouslySetInnerHTML={{ __html: proposal?.components?.find((c: any) => c.code == 'implementation')?.content }}></div>
                                         </Grid>
                                     </Grid>
 
@@ -553,7 +469,8 @@ function Template() {
                                         </Grid>
 
                                         <Grid item xs={12} md={12} sx={{ minWidth: '100%', my: 2, textAlign: 'justify' }}>
-                                            {proposal?.components?.filter((c: any) => c.code == 'solution')[0]?.content}
+                                            {/* {proposal?.components?.filter((c: any) => c.code == 'solution')[0]?.content} */}
+                                            <div dangerouslySetInnerHTML={{ __html: proposal?.components?.find((c: any) => c.code == 'solution')?.content }}></div>
                                             <br /><br />
                                         </Grid>
                                     </Grid>
@@ -596,7 +513,7 @@ function Template() {
                                         </Grid>
 
                                         <Grid item xs={12} md={12} sx={{ minWidth: '100%', my: 2, textAlign: 'justify' }}>
-                                            {proposal?.components?.filter((c: any) => c.code == 'cost')[0]?.content}
+                                        <div dangerouslySetInnerHTML={{ __html: proposal?.components?.find((c: any) => c.code == 'cost')?.content }}></div>
                                         </Grid>
                                     </Grid>
 

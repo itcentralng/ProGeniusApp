@@ -144,13 +144,13 @@ function DocumentView() {
             <Grid sx={{}} container>
                 {/* <Grid item xs={12} sm={3} md={3} lg={3}></Grid>  */}
                 <Grid item xs={12} sm={9} md={9} lg={9} sx={{ px: 20, py: 2 }}>
-                    <Typography variant='h3' sx={{ color: '#3C0B79' }}>Proposal
-                     
-                                        <Button sx={{ background: '#000040', padding: '1rem',boxShadow: '0 2px 9px 0 #888888', color: '#fff' }}
-                                            onClick={() => navigate('/proposals')}>
-                                            <ViewAgenda />
-                                            Back to Proposals Listing
-                                        </Button>
+                    <Typography variant='h3' sx={{ color: '#3C0B79' }}>
+                    <Button sx={{ background: '#000040', padding: '1rem',boxShadow: '0 2px 9px 0 #888888', color: '#fff' }}
+                        onClick={() => navigate('/proposals')}>
+                        <ViewAgenda />
+                        Back
+                    </Button>
+                        Proposal        
                     </Typography>                 
                 </Grid>
                 <Grid item xs={12} sm={9} md={9} lg={9}><br /></Grid>
@@ -186,7 +186,7 @@ function DocumentView() {
                         {loading && "Loading..."}
 
                         {/* Show Macot */}
-                        {!loading && !component.code
+                        {!loading && !component.code && !preview
                         && <><Mascot/> <Typography variant='h6' sx={{ p: 2, }}>Select a component to start.</Typography></>}
 
                         {/* Show Component */}
@@ -222,22 +222,29 @@ function DocumentView() {
                         <>
                         <Grid container>
                             <Grid item xs={12} md={12}><Typography variant='h4'>Select template</Typography></Grid> 
-                            <Grid item xs={12} md={4}>
+                            {/* <Grid item xs={12} md={4}>
                                 <Button onClick={()=>{gotoPreview(1)}} >
                                     <img src={`${templateDefault}`}  alt="Template Default" 
                                     style={{width:'15rem',height:'20rem',boxShadow: '0 2px 9px 0 #888888', color: '#fff', border: '1px solid #fff'}}/>
                                 </Button>
-                            </Grid>
+                            </Grid> */}
                             <Grid item xs={12} md={4}>
                             <Button onClick={()=>{gotoPreview(2)}} >
                                     <img src={`${templateOne}`}  alt="Template One"  
                                     style={{width:'15rem',height:'20rem',boxShadow: '0 2px 9px 0 #888888', color: '#fff', border: '1px solid #fff'}}/>   
                                 </Button>
                                 
-                            </Grid> 
+                            </Grid>                                  
                             <Grid item xs={12} md={4}>
                                 <div style={{width:'15rem',height:'20rem',boxShadow: '0 2px 9px 0 #888888', background: '#fff', border: '1px solid #fff'}}>
-                                    <Typography variant='h5' sx={{p:5, color: '#000'}}>Coming soon...</Typography>
+                                    <Typography variant='h5' sx={{p:5, color: '#000'}}>Template 2
+                                    <Typography>Coming soon...</Typography></Typography>
+                                </div>
+                            </Grid>                                 
+                            <Grid item xs={12} md={4}>
+                                <div style={{width:'15rem',height:'20rem',boxShadow: '0 2px 9px 0 #888888', background: '#fff', border: '1px solid #fff'}}>
+                                    <Typography variant='h5' sx={{p:5, color: '#000'}}>Template 3
+                                    <Typography>Coming soon...</Typography></Typography>
                                 </div>
                             </Grid>                                 
                         </Grid>
