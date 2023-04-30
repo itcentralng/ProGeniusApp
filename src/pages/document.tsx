@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Box, Button, Grid, Typography } from '@mui/material';
 import Mascot from '../components/mascot';
 import proposals from '../components/proposals';
-import { AddBoxOutlined, RefreshOutlined, EditNote, PreviewTwoTone, SaveAs, ImportExportOutlined } from '@mui/icons-material';
+import { AddBoxOutlined, RefreshOutlined, EditNote,ViewAgenda, PreviewTwoTone, SaveAs, ImportExportOutlined, EditNoteRounded } from '@mui/icons-material';
 import { Editor } from '@tinymce/tinymce-react';
 //import saveAs from 'file-saver';
 
@@ -143,7 +143,16 @@ function DocumentView() {
 
             <Grid sx={{}} container>
                 {/* <Grid item xs={12} sm={3} md={3} lg={3}></Grid>  */}
-                <Grid item xs={12} sm={9} md={9} lg={9} sx={{ px: 20, py: 2 }}><Typography variant='h3' sx={{ color: '#3C0B79' }}>Proposal</Typography></Grid>
+                <Grid item xs={12} sm={9} md={9} lg={9} sx={{ px: 20, py: 2 }}>
+                    <Typography variant='h3' sx={{ color: '#3C0B79' }}>Proposal
+                     
+                                        <Button sx={{ background: '#000040', padding: '1rem',boxShadow: '0 2px 9px 0 #888888', color: '#fff' }}
+                                            onClick={() => navigate('/proposals')}>
+                                            <ViewAgenda />
+                                            Back to Proposals Listing
+                                        </Button>
+                    </Typography>                 
+                </Grid>
                 <Grid item xs={12} sm={9} md={9} lg={9}><br /></Grid>
             </Grid>
 
