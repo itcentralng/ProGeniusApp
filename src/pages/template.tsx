@@ -7,6 +7,11 @@ import Mascot from '../components/mascot'
 import logo from '../components/images/logo.png';
 import coverImage from '../components/images/template_one_cover.png';
 import aboutImage from '../components/images/template_one_about.png';
+import problemImage from '../components/images/template_one_problem.png';
+import solutionImage from '../components/images/template_one_implementation.png';
+
+import problemStatementImage from '../components/images/problem_statement.png';
+import implementationImage from '../components/images/solution.png';
 
 function Template() {
     const BASE_URL = process.env.REACT_APP_API_URL;
@@ -23,19 +28,41 @@ function Template() {
 
     const [cover, setCover] = useState(true);
     const [about, setAbout] = useState(false);
+    const [problem, setProblem] = useState(false);
+    const [implementation, setImplementation] = useState(false);
+
     const toggleSection = (sectionId: number) => {
         switch (sectionId) {
             case 1:
                 setCover(true);
                 setAbout(false);
+                setProblem(false);
+                setImplementation(false);
                 break;
             case 2:
                 setCover(false);
                 setAbout(true);
+                setProblem(false);
+                setImplementation(false);
+                break;
+            case 3:
+                setCover(false);
+                setAbout(false);
+                setProblem(true);
+                setImplementation(false);
+                break;
+            case 4:
+                setCover(false);
+                setAbout(false);
+                setProblem(false);
+                setImplementation(true);
                 break;
             default:
                 setCover(true);
                 setAbout(false);
+                setProblem(false);
+                setImplementation(false);
+
         }
     }
 
@@ -49,49 +76,68 @@ function Template() {
                 <Grid item xs={12} sm={12} md={2} lg={2}>
                     <Card>
                         {/* <Typography variant='h3' sx={{ background: '#000040', color: '#fff', opacity: .7, p: 8, py: 3, borderBottom: '1px solid black' }}>Modern Template</Typography> */}
-                        <CardContent sx={{   }}>
+                        <CardContent sx={{}}>
 
-                            {!loader && (
-                                <Grid sx={{ p: 1,   color: '#fff' }} container spacing={4}>
+                            <Grid sx={{ p: 1, color: '#fff' }} container spacing={4}>
 
-                                    <Grid container spacing={1} xs={12} md={12} sx={{ my: 5, mx: 2 }}>
-                                        <Grid item xs={12} sm={12} md={12} lg={12} spacing={1}>
-                                            <Typography variant='h5' sx={{ textAlign: 'center' }}>Cover</Typography>
-                                            <Button onClick={() => toggleSection(1)}>
-                                                <img src={coverImage} alt="Cover Image"
-                                                    style={{
-                                                        width: '13rem', height: '15rem', padding: '1rem', boxShadow: '0 2px 9px 0 #888888',
-                                                        color: '#fff', border: '1px solid #fff'
-                                                    }} />
-                                            </Button>
-                                        </Grid>
-
-                                        <Grid item xs={12} sm={12} md={12} lg={12} spacing={1}>
-                                            <Typography variant='h5' sx={{ textAlign: 'center' }}>About</Typography>
-                                            <Button onClick={() => toggleSection(2)}>
-                                                <img src={aboutImage} alt="About Image"
-                                                    style={{
-                                                        width: '13rem', height: '15rem', padding: '1rem', boxShadow: '0 2px 9px 0 #888888',
-                                                        color: '#fff', border: '1px solid #fff'
-                                                    }} />
-                                            </Button>
-                                        </Grid>
+                                <Grid container spacing={1} xs={12} md={12} sx={{ my: 5, mx: 2 }}>
+                                    <Grid item xs={12} sm={12} md={12} lg={12} spacing={1}>
+                                        <Typography variant='h5' sx={{ textAlign: 'center' }}>Cover</Typography>
+                                        <Button onClick={() => toggleSection(1)}>
+                                            <img src={coverImage} alt="Cover Image"
+                                                style={{
+                                                    width: '13rem', height: '15rem', padding: '1rem', boxShadow: '0 2px 9px 0 #888888',
+                                                    color: '#fff', border: '1px solid #fff'
+                                                }} />
+                                        </Button>
                                     </Grid>
 
-                                </Grid>
-                            )}
+                                    <Grid item xs={12} sm={12} md={12} lg={12} spacing={1}>
+                                        <Typography variant='h5' sx={{ textAlign: 'center' }}>About</Typography>
+                                        <Button onClick={() => toggleSection(2)}>
+                                            <img src={aboutImage} alt="About Image"
+                                                style={{
+                                                    width: '13rem', height: '15rem', padding: '1rem', boxShadow: '0 2px 9px 0 #888888',
+                                                    color: '#fff', border: '1px solid #fff'
+                                                }} />
+                                        </Button>
+                                    </Grid>
 
+                                    <Grid item xs={12} sm={12} md={12} lg={12} spacing={1}>
+                                        <Typography variant='h5' sx={{ textAlign: 'center' }}>Problem</Typography>
+                                        <Button onClick={() => toggleSection(3)}>
+                                            <img src={problemImage} alt="Problem Image"
+                                                style={{
+                                                    width: '13rem', height: '15rem', padding: '1rem', boxShadow: '0 2px 9px 0 #888888',
+                                                    color: '#fff', border: '1px solid #fff'
+                                                }} />
+                                        </Button>
+                                    </Grid>
+
+                                    <Grid item xs={12} sm={12} md={12} lg={12} spacing={1}>
+                                        <Typography variant='h5' sx={{ textAlign: 'center' }}>Implementation</Typography>
+                                        <Button onClick={() => toggleSection(4)}>
+                                            <img src={solutionImage} alt="Implementation Image"
+                                                style={{
+                                                    width: '13rem', height: '15rem', padding: '1rem', boxShadow: '0 2px 9px 0 #888888',
+                                                    color: '#fff', border: '1px solid #fff'
+                                                }} />
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+
+                            </Grid>
 
                         </CardContent>
                     </Card>
                 </Grid>
                 <Grid item xs={12} sm={12} md={1} lg={1}></Grid>
-                
+
                 <Grid item xs={12} sm={12} md={7} lg={7}>
                     <Card>
                         {/* <Typography variant='h3' sx={{ background: '#000040', color: '#fff', opacity: .7, p: 8, py: 3, borderBottom: '1px solid black' }}>Modern Template</Typography> */}
                         <CardContent sx={{ p: 2, background: 'black' }}>
-                             
+
 
                             {cover && (
                                 <Grid sx={{ p: 6, color: '#fff' }} container spacing={4}>
@@ -116,15 +162,15 @@ function Template() {
                                         </Grid>
                                     </Grid>
 
-                                    <Grid container spacing={1} xs={12} md={12} sx={{ my: 5, mx: 2}}>
+                                    <Grid container spacing={1} xs={12} md={12} sx={{ my: 5, mx: 2 }}>
                                         <Grid item xs={12} sm={5} md={5} lg={5}>
                                             <Typography variant='h5'>PROPOSED TO:</Typography>
                                             <Typography variant='h6'>{proposal?.client?.name}</Typography>
                                         </Grid>
 
                                         <Grid item xs={12} sm={7} md={7} lg={7}>
-                                            <Typography variant='h5' sx={{px:15}}>ORGANIZED BY:</Typography>
-                                            <Typography variant='h6' sx={{px:15}}>{proposal?.company?.name}</Typography>
+                                            <Typography variant='h5' sx={{ px: 15 }}>ORGANIZED BY:</Typography>
+                                            <Typography variant='h6' sx={{ px: 15 }}>{proposal?.company?.name}</Typography>
                                         </Grid>
                                     </Grid>
 
@@ -132,16 +178,16 @@ function Template() {
                             )}
 
                             {about && (
-                                <Grid sx={{ p: 6, color: '#fff'}} container spacing={1}>
+                                <Grid sx={{ p: 6, color: '#fff' }} container spacing={1}>
 
                                     <Grid item xs={12} md={12}>
-                                        <Grid item xs={12} md={12} 
-                                        sx={{display:'flex', justifyContent: 'center', alignContent: 'end',}}>
+                                        <Grid item xs={12} md={12}
+                                            sx={{ display: 'flex', justifyContent: 'center', alignContent: 'end', }}>
                                             <Grid item xs={6} md={10}></Grid>
                                             <Grid item xs={6} md={2}>
-                                                <div style={{ width: '60%', border: '3px solid #fff', margin:'.5rem' }}></div>
-                                                <div style={{ width: '40%', border: '3px solid #fff', margin:'.5rem' }}></div>
-                                                <div style={{ width: '20%', border: '3px solid #fff', margin:'.5rem' }}></div>
+                                                <div style={{ width: '60%', border: '3px solid #fff', margin: '.5rem' }}></div>
+                                                <div style={{ width: '40%', border: '3px solid #fff', margin: '.5rem' }}></div>
+                                                <div style={{ width: '20%', border: '3px solid #fff', margin: '.5rem' }}></div>
                                                 <Typography variant='h4'>{new Date(proposal?.updated_at).getFullYear()}</Typography>
                                             </Grid>
                                         </Grid>
@@ -152,29 +198,200 @@ function Template() {
                                             <Typography variant='h3'>Company</Typography>
                                         </Grid>
 
-                                        <Grid item xs={12} md={12}  sx={{display:'flex', justifyContent: 'start', alignContent: 'center',}}>
+                                        <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'start', alignContent: 'center', }}>
                                             {proposal?.company?.logo != '' && (
                                                 <>
-                                                <img src={coverImage} alt="Company Image" style={{width: '20rem', height: '20rem'}} />
-                                                <div style={{ height: '5rem',marginLeft: '10rem', borderLeft: '3px solid #fff' }}></div> 
-                                                </>  
+                                                    <img src={coverImage} alt="Company Image" style={{ width: '20rem', height: '20rem' }} />
+                                                    <div style={{ height: '5rem', marginLeft: '10rem', borderLeft: '3px solid #fff' }}></div>
+                                                </>
                                             )}
-                                            
+
                                             {proposal?.company?.logo == '' && (
                                                 <>
-                                                <div style={{ height: '5rem',borderLeft: '3px solid #fff', }}></div> 
-                                                </>  
-                                            )}  
+                                                    <div style={{ height: '5rem', borderLeft: '3px solid #fff', }}></div>
+                                                </>
+                                            )}
                                         </Grid>
 
-                                        <Grid item xs={12} md={12} sx={{ minWidth: '100%',   my: 2 , textAlign:'justify'}}>
-                                        {proposal?.components?.filter((c:any)=>c.code == 'about')[0]?.content}
+                                        <Grid item xs={12} md={12} sx={{ minWidth: '100%', my: 2, textAlign: 'justify' }}>
+                                            {proposal?.components?.filter((c: any) => c.code == 'about')[0]?.content}
                                         </Grid>
                                     </Grid>
 
-                                    <Grid container spacing={1} xs={12} md={12} sx={{ my: 5,}}>
-                                        <Grid item xs={12} sm={12} md={12} lg={12}>                                                                               
-                                            <Typography variant='h5'  sx={{ borderBottom: '3px solid #fff'}}>Proposal: {proposal?.offering}</Typography>                                             
+                                    <Grid container spacing={1} xs={12} md={12} sx={{ my: 5, }}>
+                                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                                            <Typography variant='h5' sx={{ borderBottom: '3px solid #fff' }}>Proposal: {proposal?.offering}</Typography>
+                                        </Grid>
+                                    </Grid>
+
+                                </Grid>
+                            )}
+
+                            {problem && (
+                                <Grid sx={{ p: 6, color: '#fff' }} container spacing={1}>
+
+                                    <Grid item xs={12} md={12}>
+                                        <Grid item xs={12} md={12}
+                                            sx={{ display: 'flex', justifyContent: 'center', alignContent: 'end', }}>
+                                            <Grid item xs={6} md={10}></Grid>
+                                            <Grid item xs={6} md={2}>
+                                                <div style={{ width: '60%', border: '3px solid #fff', margin: '.5rem' }}></div>
+                                                <div style={{ width: '40%', border: '3px solid #fff', margin: '.5rem' }}></div>
+                                                <div style={{ width: '20%', border: '3px solid #fff', margin: '.5rem' }}></div>
+                                                <Typography variant='h4'>{new Date(proposal?.updated_at).getFullYear()}</Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item xs={12} md={12}>
+                                            <Typography variant='h3'>Project</Typography>
+                                        </Grid>
+                                        <Grid item xs={12} md={12}>
+                                            <Typography variant='h3'>Background</Typography>
+                                        </Grid>
+
+                                        <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'start', alignContent: 'center', }}>                                             
+                                            <>  
+                                                <div style={{ height: '5rem', marginLeft: '20rem', marginRight: '1rem', borderRight: '3px solid #fff' }}></div>
+                                                <img src={problemStatementImage} alt="problem Statement Image" style={{ width: '26rem', height: '20rem' }} />                                                
+                                            </>                                              
+                                        </Grid>
+
+                                        <Grid item xs={12} md={12} sx={{ minWidth: '100%', my: 2, textAlign: 'justify' }}>
+                                            {proposal?.components?.filter((c: any) => c.code == 'problem')[0]?.content}
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid container spacing={1} xs={12} md={12} sx={{ my: 5, }}>
+                                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                                            <Typography variant='h5' sx={{ borderBottom: '3px solid #fff' }}>Proposal: {proposal?.offering}</Typography>
+                                        </Grid>
+                                    </Grid>
+
+                                </Grid>
+                            )}
+
+                            {implementation && (
+                                <Grid sx={{ p: 6, color: '#fff' }} container spacing={1}>
+
+                                    <Grid item xs={12} md={12}>
+                                        <Grid item xs={12} md={12}
+                                            sx={{ display: 'flex', justifyContent: 'center', alignContent: 'end', }}>
+                                            <Grid item xs={6} md={10}></Grid>
+                                            <Grid item xs={6} md={2}>
+                                                <div style={{ width: '60%', border: '3px solid #fff', margin: '.5rem' }}></div>
+                                                <div style={{ width: '40%', border: '3px solid #fff', margin: '.5rem' }}></div>
+                                                <div style={{ width: '20%', border: '3px solid #fff', margin: '.5rem' }}></div>
+                                                <Typography variant='h4'>{new Date(proposal?.updated_at).getFullYear()}</Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item xs={12} md={12}>
+                                            <Typography variant='h3'>Goals &</Typography>
+                                        </Grid>
+                                        <Grid item xs={12} md={12}>
+                                            <Typography variant='h3'>Objectives</Typography>
+                                        </Grid>
+
+                                        <Grid item xs={12} md={12} sx={{ display: 'flex', justifyContent: 'start', alignContent: 'center', flexDirection: 'column' }}>                                             
+                                            <>  
+                                                <div style={{width: '15rem', height: '1rem', marginLeft: '33rem', marginBottom: '1rem', borderBottom: '3px solid #fff' }}></div> 
+                                                <img src={implementationImage} alt="Solution Image" style={{ width: '100%', height: '20rem' }} />                                                
+                                            </>                                              
+                                        </Grid>
+
+                                        <Grid item xs={12} md={12} sx={{ minWidth: '100%', my: 2, textAlign: 'justify' }}>
+                                            {/* {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.split(':')[0]}: */}
+                                            <br/>
+                                            {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
+                                            slice(0, (proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':')))
+                                            }:
+                                            <br/><br/>
+                                            <Typography>
+                                                <span style={{width: '1rem', height: '1rem', border: '2px solid white', background: 'grey', 
+                                                borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'}}>1.</span>
+                                                <span>                                                 
+                                                {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
+                                                slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf('1.'))+2)?.
+                                                split('2.')[0]
+                                                }
+                                                </span>
+                                            </Typography>
+                                            <br/><br/>
+
+                                            <Typography>
+                                                <span style={{width: '1rem', height: '1rem', border: '2px solid white', background: 'grey', 
+                                                borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'}}>2.</span>
+                                                <span>  
+                                                {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
+                                                slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':'))+1)?.
+                                                split('2.')[1]?.
+                                                split('3.')[0]
+                                                }
+                                                </span>
+                                            </Typography>
+                                            <br/><br/>
+
+                                            <Typography>
+                                                <span style={{width: '1rem', height: '1rem', border: '2px solid white', background: 'grey', 
+                                                borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'}}>3.</span>
+                                                <span>      
+                                                {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
+                                                slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':'))+1)?.
+                                                split('3.')[1]?.
+                                                split('4.')[0]
+                                                }
+                                                </span>
+                                            </Typography>
+                                            <br/><br/>
+
+                                            <Typography>
+                                                <span style={{width: '1rem', height: '1rem', border: '2px solid white', background: 'grey', 
+                                                borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'}}>4.</span>
+                                                <span>  
+                                                {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
+                                                slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':'))+1)?.
+                                                split('4.')[1]?.
+                                                split('5.')[0]
+                                                }
+                                                </span>
+                                            </Typography>
+                                            <br/><br/>
+                                            
+                                            <Typography>
+                                                <span style={{width: '1rem', height: '1rem', border: '2px solid white', background: 'grey', 
+                                                borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'}}>5.</span>
+                                                <span>  
+                                                {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
+                                                slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':'))+1)?.
+                                                split('5.')[1]?.
+                                                split('6.')[0]
+                                                }
+                                                </span>
+                                            </Typography>
+                                            <br/><br/>
+
+                                            <Typography>
+                                                <span style={{width: '1rem', height: '1rem', border: '2px solid white', background: 'grey', 
+                                                borderRadius: '50%', padding: '.4rem .5rem', marginRight: '1rem'}}>6.</span>
+                                                <span>  
+                                                {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
+                                                slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':'))+1)?.
+                                                split('6.')[1]?.
+                                                split('7.')[0]
+                                                }
+                                                <br/><br/>
+                                                {proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content?.
+                                                slice((proposal?.components?.filter((c: any) => c.code == 'implementation')[0]?.content.indexOf(':'))+1)?.
+                                                split('7.')[1]?.
+                                                split('8.')[0]
+                                                }
+                                                </span>
+                                            </Typography>                                            
+                                            <br/><br/> 
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid container spacing={1} xs={12} md={12} sx={{ my: 5, }}>
+                                        <Grid item xs={12} sm={12} md={12} lg={12}>
+                                            <Typography variant='h5' sx={{ borderBottom: '3px solid #fff' }}>Proposal: {proposal?.offering}</Typography>
                                         </Grid>
                                     </Grid>
 
