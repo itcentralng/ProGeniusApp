@@ -46,13 +46,13 @@ function Template() {
             <Header />
 
             <Grid sx={{ p: 6, }} container spacing={1}>
-                <Grid item xs={12} sm={12} md={3} lg={3}>
+                <Grid item xs={12} sm={12} md={2} lg={2}>
                     <Card>
                         {/* <Typography variant='h3' sx={{ background: '#000040', color: '#fff', opacity: .7, p: 8, py: 3, borderBottom: '1px solid black' }}>Modern Template</Typography> */}
                         <CardContent sx={{   }}>
 
                             {!loader && (
-                                <Grid sx={{ p: 6, color: '#fff' }} container spacing={4}>
+                                <Grid sx={{ p: 1,   color: '#fff' }} container spacing={4}>
 
                                     <Grid container spacing={1} xs={12} md={12} sx={{ my: 5, mx: 2 }}>
                                         <Grid item xs={12} sm={12} md={12} lg={12} spacing={1}>
@@ -85,13 +85,15 @@ function Template() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} sm={12} md={9} lg={9}>
+                <Grid item xs={12} sm={12} md={1} lg={1}></Grid>
+                
+                <Grid item xs={12} sm={12} md={7} lg={7}>
                     <Card>
                         {/* <Typography variant='h3' sx={{ background: '#000040', color: '#fff', opacity: .7, p: 8, py: 3, borderBottom: '1px solid black' }}>Modern Template</Typography> */}
                         <CardContent sx={{ p: 2, background: 'black' }}>
-                            {loader && 'Loading...'}
+                             
 
-                            {!loader && cover && (
+                            {cover && (
                                 <Grid sx={{ p: 6, color: '#fff' }} container spacing={4}>
 
                                     <Grid item xs={12} md={6}>
@@ -105,7 +107,7 @@ function Template() {
                                             {proposal?.company?.address}
                                         </Grid>
 
-                                        <Grid item xs={12} md={12} sx={{ width: '20%', height: '50vh', border: '3px solid #fff', my: 2 }}>
+                                        <Grid item xs={12} md={12} sx={{ width: '40%', height: '50vh', border: '3px solid #fff', my: 2 }}>
                                             <Grid item xs={12} md={12} sx={{ m: 8, my: 15, p: 1, background: 'black', minWidth: '100%' }}>
                                                 <Grid item xs={12} md={12}><Typography variant='h3' sx={{ fontWeight: 'bold', color: 'gold' }}>Proposal</Typography></Grid>
                                                 <Grid item xs={12} md={12} sx={{ minWidth: '25rem' }}><Typography variant='h4'>{proposal?.offering}</Typography></Grid>
@@ -114,22 +116,22 @@ function Template() {
                                         </Grid>
                                     </Grid>
 
-                                    <Grid container spacing={1} xs={12} md={12} sx={{ my: 5, mx: 2 }}>
+                                    <Grid container spacing={1} xs={12} md={12} sx={{ my: 5, mx: 2}}>
                                         <Grid item xs={12} sm={5} md={5} lg={5}>
                                             <Typography variant='h5'>PROPOSED TO:</Typography>
                                             <Typography variant='h6'>{proposal?.client?.name}</Typography>
                                         </Grid>
 
-                                        <Grid item xs={12} sm={7} md={7} lg={7} >
-                                            <Typography variant='h5'>ORGANIZED BY:</Typography>
-                                            <Typography variant='h6'>{proposal?.company?.name}</Typography>
+                                        <Grid item xs={12} sm={7} md={7} lg={7}>
+                                            <Typography variant='h5' sx={{px:15}}>ORGANIZED BY:</Typography>
+                                            <Typography variant='h6' sx={{px:15}}>{proposal?.company?.name}</Typography>
                                         </Grid>
                                     </Grid>
 
                                 </Grid>
                             )}
 
-                            {!loader && about && (
+                            {about && (
                                 <Grid sx={{ p: 6, color: '#fff' }} container spacing={4}>
 
                                     <Grid item xs={12} md={6}>
@@ -180,6 +182,7 @@ function Template() {
                         </CardContent>
                     </Card>
                 </Grid>
+                <Grid item xs={12} sm={12} md={2} lg={2}></Grid>
             </Grid>
         </div>
 
